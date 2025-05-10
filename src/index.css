@@ -13,6 +13,36 @@ code {
     monospace;
 }
 
+/* Disclaimer Banner Styles */
+.disclaimer-banner {
+  background-color: #e53e3e;
+  color: white;
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.disclaimer-content {
+  display: inline-block;
+  animation: scrollText 30s linear infinite;
+}
+
+.disclaimer-content span {
+  margin-right: 80px;
+  font-weight: 600;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 /* Basic styles to replace Tailwind */
 .flex {
   display: flex;
@@ -134,6 +164,31 @@ code {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.bg-blue-600 {
+  background-color: #2563eb;
+}
+
+.hover\:bg-blue-700:hover {
+  background-color: #1d4ed8;
+}
+
+.text-white {
+  color: white;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
 }
 
 @media (min-width: 768px) {

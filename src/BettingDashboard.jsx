@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -16,6 +16,29 @@ import {
 } from "recharts";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+
+const DisclaimerBanner = () => {
+  return (
+    <div className="disclaimer-banner">
+      <div className="disclaimer-content">
+        <span>
+          ⚠️ DISCLAIMER: This dashboard is for entertainment purposes only.
+          Betting can be addictive and lead to financial losses. Never bet more
+          than you can afford to lose. If you or someone you know has a gambling
+          problem, please seek help at www.gamblersanonymous.org. This is not
+          financial advice. Bet responsibly. ⚠️
+        </span>
+        <span>
+          ⚠️ DISCLAIMER: This dashboard is for entertainment purposes only.
+          Betting can be addictive and lead to financial losses. Never bet more
+          than you can afford to lose. If you or someone you know has a gambling
+          problem, please seek help at www.gamblersanonymous.org. This is not
+          financial advice. Bet responsibly. ⚠️
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const BettingDashboard = () => {
   const dashboardRef = useRef(null);
@@ -155,190 +178,200 @@ const BettingDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col p-4 bg-gray-100 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-center">
-          Betting Performance Dashboard
-        </h1>
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={exportToPDF}
-        >
-          Export to PDF
-        </button>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <DisclaimerBanner />
 
-      <div ref={dashboardRef} className="flex flex-col">
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-2">Total Profit/Loss</h2>
-            <p
-              className={`text-2xl font-bold ${
-                totalProfit >= 0 ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              €{totalProfit.toFixed(2)}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-2">ROI</h2>
-            <p
-              className={`text-2xl font-bold ${
-                roi >= 0 ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {roi.toFixed(2)}%
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-2">Win Rate</h2>
-            <p className="text-2xl font-bold text-blue-600">
-              {winRate.toFixed(2)}%
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-2">Total Bets</h2>
-            <p className="text-2xl font-bold">{totalBets}</p>
-          </div>
+      <div className="p-4 bg-white">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-center">
+            Betting Performance Dashboard
+          </h1>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={exportToPDF}
+          >
+            Export to PDF
+          </button>
         </div>
 
-        {/* Profit Evolution Chart */}
-        <div className="bg-white p-4 rounded shadow mb-6">
-          <h2 className="text-lg font-semibold mb-4">
-            Cumulative Profit Evolution
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={bets}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="shortDate" />
-              <YAxis />
-              <Tooltip formatter={(value) => `€${value}`} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="cumulativeProfit"
-                name="Cumulative Profit"
-                stroke="#2196F3"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <div ref={dashboardRef} className="flex flex-col">
+          {/* Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-2">Total Profit/Loss</h2>
+              <p
+                className={`text-2xl font-bold ${
+                  totalProfit >= 0 ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                €{totalProfit.toFixed(2)}
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-2">ROI</h2>
+              <p
+                className={`text-2xl font-bold ${
+                  roi >= 0 ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {roi.toFixed(2)}%
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-2">Win Rate</h2>
+              <p className="text-2xl font-bold text-blue-600">
+                {winRate.toFixed(2)}%
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-2">Total Bets</h2>
+              <p className="text-2xl font-bold">{totalBets}</p>
+            </div>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Individual Bet Profit/Loss */}
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-4">Profit/Loss per Bet</h2>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={bets}>
+          {/* Profit Evolution Chart */}
+          <div className="bg-white p-4 rounded shadow mb-6">
+            <h2 className="text-lg font-semibold mb-4">
+              Cumulative Profit Evolution
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={bets}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="shortDate" />
                 <YAxis />
                 <Tooltip formatter={(value) => `€${value}`} />
-                <Bar
-                  dataKey="profitLoss"
-                  name="Profit/Loss"
-                  fill={(data) => (data > 0 ? "#4CAF50" : "#F44336")}
-                >
-                  {bets.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={entry.profitLoss >= 0 ? "#4CAF50" : "#F44336"}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="cumulativeProfit"
+                  name="Cumulative Profit"
+                  stroke="#2196F3"
+                  strokeWidth={2}
+                />
+              </LineChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Win/Loss Ratio */}
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-4">
-              Win/Loss Distribution
-            </h2>
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={resultData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name}: ${(percent * 100).toFixed(0)}%`
-                  }
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {resultData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value) => value} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Betting Details Table */}
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-lg font-semibold mb-4">Betting History</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr className="bg-gray-200 text-gray-700">
-                  <th className="py-2 px-4 text-left">Date</th>
-                  <th className="py-2 px-4 text-left">Match</th>
-                  <th className="py-2 px-4 text-left">Bet Type</th>
-                  <th className="py-2 px-4 text-left">Odds</th>
-                  <th className="py-2 px-4 text-left">Stake</th>
-                  <th className="py-2 px-4 text-left">Result</th>
-                  <th className="py-2 px-4 text-left">Profit/Loss</th>
-                  <th className="py-2 px-4 text-left">Cumulative</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bets.map((bet, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* Individual Bet Profit/Loss */}
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-4">
+                Profit/Loss per Bet
+              </h2>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={bets}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="shortDate" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `€${value}`} />
+                  <Bar
+                    dataKey="profitLoss"
+                    name="Profit/Loss"
+                    fill={(data) => (data > 0 ? "#4CAF50" : "#F44336")}
                   >
-                    <td className="py-2 px-4">{bet.date}</td>
-                    <td className="py-2 px-4">{bet.match}</td>
-                    <td className="py-2 px-4">{bet.bet}</td>
-                    <td className="py-2 px-4">{bet.odds.toFixed(2)}</td>
-                    <td className="py-2 px-4">€{bet.stake.toFixed(2)}</td>
-                    <td
-                      className={`py-2 px-4 font-medium ${
-                        bet.result === "Win" ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      {bet.result}
-                    </td>
-                    <td
-                      className={`py-2 px-4 font-medium ${
-                        bet.profitLoss >= 0 ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      €{bet.profitLoss.toFixed(2)}
-                    </td>
-                    <td
-                      className={`py-2 px-4 font-medium ${
-                        bet.cumulativeProfit >= 0
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      €{bet.cumulativeProfit.toFixed(2)}
-                    </td>
+                    {bets.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.profitLoss >= 0 ? "#4CAF50" : "#F44336"}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Win/Loss Ratio */}
+            <div className="bg-white p-4 rounded shadow">
+              <h2 className="text-lg font-semibold mb-4">
+                Win/Loss Distribution
+              </h2>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={resultData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {resultData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => value} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Betting Details Table */}
+          <div className="bg-white p-4 rounded shadow">
+            <h2 className="text-lg font-semibold mb-4">Betting History</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700">
+                    <th className="py-2 px-4 text-left">Date</th>
+                    <th className="py-2 px-4 text-left">Match</th>
+                    <th className="py-2 px-4 text-left">Bet Type</th>
+                    <th className="py-2 px-4 text-left">Odds</th>
+                    <th className="py-2 px-4 text-left">Stake</th>
+                    <th className="py-2 px-4 text-left">Result</th>
+                    <th className="py-2 px-4 text-left">Profit/Loss</th>
+                    <th className="py-2 px-4 text-left">Cumulative</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {bets.map((bet, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                    >
+                      <td className="py-2 px-4">{bet.date}</td>
+                      <td className="py-2 px-4">{bet.match}</td>
+                      <td className="py-2 px-4">{bet.bet}</td>
+                      <td className="py-2 px-4">{bet.odds.toFixed(2)}</td>
+                      <td className="py-2 px-4">€{bet.stake.toFixed(2)}</td>
+                      <td
+                        className={`py-2 px-4 font-medium ${
+                          bet.result === "Win"
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        {bet.result}
+                      </td>
+                      <td
+                        className={`py-2 px-4 font-medium ${
+                          bet.profitLoss >= 0
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        €{bet.profitLoss.toFixed(2)}
+                      </td>
+                      <td
+                        className={`py-2 px-4 font-medium ${
+                          bet.cumulativeProfit >= 0
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
+                        €{bet.cumulativeProfit.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
