@@ -45,6 +45,8 @@ const translations = {
     losses: "Losses",
     win: "Win",
     loss: "Loss",
+    viewProof: "View Bet Proof",
+    closeImage: "Close",
     tooltips: {
       totalProfitLoss:
         "The net sum of all wins minus losses across all bets placed. A positive number indicates overall profit.",
@@ -88,6 +90,8 @@ const translations = {
     losses: "Pertes",
     win: "Gagné",
     loss: "Perdu",
+    viewProof: "Voir Preuve du Pari",
+    closeImage: "Fermer",
     tooltips: {
       totalProfitLoss:
         "La somme nette de tous les gains moins les pertes sur tous les paris placés. Un nombre positif indique un profit global.",
@@ -116,6 +120,52 @@ const betTypeTranslations = {
   "Les 2 équipes marquent Oui": "Both teams to score Yes",
   "Résultat Naples": "Napoli Win",
 };
+
+// Image Modal Component
+const ImageModal = ({ isOpen, imageUrl, onClose, language }) => {
+  if (!isOpen) return null;
+
+  console.log("Opening modal with image:", imageUrl);
+
+  return (
+    <div className="image-modal-overlay" onClick={onClose}>
+      <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="image-modal-close" onClick={onClose}>
+          {translations[language].closeImage} &times;
+        </button>
+        <img
+          src={imageUrl}
+          alt="Bet Proof"
+          className="image-modal-img"
+          onError={(e) => {
+            console.error("Error loading image:", imageUrl);
+            console.error(
+              "Full URL attempted:",
+              `${window.location.origin}/${imageUrl}`
+            );
+            console.error("Browser error:", e.target.error);
+            e.target.onerror = null;
+            e.target.src =
+              "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4=";
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Image Icon Component
+const ImageIcon = ({ onClick }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="image-icon"
+    onClick={onClick}
+  >
+    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+  </svg>
+);
 
 const DisclaimerBanner = ({ language }) => {
   return (
@@ -175,8 +225,10 @@ const LanguageToggle = ({ language, setLanguage }) => {
 const BettingDashboard = () => {
   const dashboardRef = useRef(null);
   const [language, setLanguage] = useState("en");
+  const [modalImage, setModalImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Original betting data (French)
+  // Betting data from screenshots
   const originalBets = [
     {
       date: "16 avril 2025",
@@ -189,6 +241,7 @@ const BettingDashboard = () => {
       result: "Loss",
       profitLoss: -100,
       cumulativeProfit: -100,
+      imageUrl: "/images/april2025/RMadridVSArsenal-04162025.jpeg",
     },
     {
       date: "20 avril 2025",
@@ -201,6 +254,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 60,
       cumulativeProfit: -40,
+      imageUrl: "/images/april2025/RMadridVSATBilbao-04202025.jpeg",
     },
     {
       date: "23 avril 2025",
@@ -213,6 +267,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 44,
       cumulativeProfit: 4,
+      imageUrl: "/images/april2025/GetafeVSRMadrid-04232025.jpeg",
     },
     {
       date: "26 avril 2025",
@@ -225,6 +280,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 34,
       cumulativeProfit: 38,
+      imageUrl: "/images/april2025/FCBarcelonaVSRMadrid-04262025.jpeg",
     },
     {
       date: "3 mai 2025",
@@ -237,6 +293,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 50,
       cumulativeProfit: 88,
+      imageUrl: "/images/may2025/LecceVSNapoli-05032025.jpeg",
     },
     {
       date: "6 mai 2025",
@@ -249,6 +306,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 46,
       cumulativeProfit: 134,
+      imageUrl: "/images/may2025/InterMilanVSFCBarcelona-05062025.jpeg",
     },
   ];
 
@@ -355,6 +413,18 @@ const BettingDashboard = () => {
       );
       pdf.save("betting-dashboard.pdf");
     });
+  };
+
+  const openModal = (imageUrl) => {
+    console.log("Attempting to open image:", imageUrl);
+    console.log("Full image path:", `${window.location.origin}/${imageUrl}`);
+    setModalImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImage(null);
   };
 
   return (
@@ -610,7 +680,21 @@ const BettingDashboard = () => {
                       className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
                     >
                       <td className="py-2 px-4">{bet.date}</td>
-                      <td className="py-2 px-4">{bet.match}</td>
+                      <td className="py-2 px-4">
+                        <div className="flex items-center">
+                          {bet.match}
+                          {bet.imageUrl && (
+                            <div
+                              className="ml-2"
+                              title={translations[language].viewProof}
+                            >
+                              <ImageIcon
+                                onClick={() => openModal(bet.imageUrl)}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </td>
                       <td className="py-2 px-4">{bet.bet}</td>
                       <td className="py-2 px-4">{bet.odds.toFixed(2)}</td>
                       <td className="py-2 px-4">€{bet.stake.toFixed(2)}</td>
@@ -649,6 +733,14 @@ const BettingDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={isModalOpen}
+        imageUrl={modalImage}
+        onClose={closeModal}
+        language={language}
+      />
     </div>
   );
 };

@@ -313,3 +313,66 @@ code {
   color: #2563eb;
   text-decoration: underline;
 }
+
+/* Image Icon and Modal Styles */
+.image-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  color: #3b82f6;
+  transition: color 0.2s;
+}
+
+.image-icon:hover {
+  color: #2563eb;
+}
+
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.image-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.image-modal-close:hover {
+  background-color: #dc2626;
+}
+
+.image-modal-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(90vh - 80px);
+  margin: 0 auto;
+}
