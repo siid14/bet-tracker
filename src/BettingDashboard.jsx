@@ -17,34 +17,163 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-const DisclaimerBanner = () => {
+// Language translations
+const translations = {
+  en: {
+    disclaimer:
+      "⚠️ DISCLAIMER: This dashboard is for entertainment purposes only. Betting can be addictive and lead to financial losses. Never bet more than you can afford to lose. If you or someone you know has a gambling problem, please seek help at www.gamblersanonymous.org. This is not financial advice. Bet responsibly. ⚠️",
+    dashboardTitle: "Betting Performance Dashboard",
+    by: "by",
+    exportToPDF: "Export to PDF",
+    totalProfitLoss: "Total Profit/Loss",
+    roi: "ROI",
+    winRate: "Win Rate",
+    totalBets: "Total Bets",
+    cumulativeProfitEvolution: "Cumulative Profit Evolution",
+    profitLossPerBet: "Profit/Loss per Bet",
+    winLossDistribution: "Win/Loss Distribution",
+    bettingHistory: "Betting History",
+    date: "Date",
+    match: "Match",
+    betType: "Bet Type",
+    odds: "Odds",
+    stake: "Stake",
+    result: "Result",
+    profitLoss: "Profit/Loss",
+    cumulative: "Cumulative",
+    wins: "Wins",
+    losses: "Losses",
+    tooltips: {
+      totalProfitLoss:
+        "The net sum of all wins minus losses across all bets placed. A positive number indicates overall profit.",
+      roi: "Return on Investment. The percentage return on total stakes. Calculated as (Total Returns - Total Stakes) / Total Stakes × 100%.",
+      winRate:
+        "The percentage of bets that resulted in a win. Calculated as (Number of Wins / Total Number of Bets) × 100%.",
+      totalBets: "The total number of bets placed in this tracking period.",
+      cumulativeProfit:
+        "Shows how your total profit/loss accumulates over time. Each point represents the running total after each bet.",
+      profitLossPerBet:
+        "Shows the individual profit or loss for each bet. Green bars indicate winning bets, red bars indicate losing bets.",
+      winLossDistribution:
+        "The proportion of winning bets (green) versus losing bets (red) shown as a percentage of total bets placed.",
+      bettingHistory:
+        "A detailed record of all bets placed, including date, match, bet type, odds, stake, result, profit/loss, and running cumulative profit.",
+    },
+  },
+  fr: {
+    disclaimer:
+      "⚠️ AVERTISSEMENT: Ce tableau de bord est uniquement à des fins de divertissement. Les paris peuvent créer une dépendance et entraîner des pertes financières. Ne pariez jamais plus que ce que vous pouvez vous permettre de perdre. Si vous ou quelqu'un que vous connaissez a un problème de jeu, veuillez consulter www.joueurs-info-service.fr. Ceci n'est pas un conseil financier. Pariez de manière responsable. ⚠️",
+    dashboardTitle: "Tableau de Bord des Paris",
+    by: "par",
+    exportToPDF: "Exporter en PDF",
+    totalProfitLoss: "Profit/Perte Total",
+    roi: "Retour sur Investissement",
+    winRate: "Taux de Réussite",
+    totalBets: "Total des Paris",
+    cumulativeProfitEvolution: "Évolution du Profit Cumulé",
+    profitLossPerBet: "Profit/Perte par Pari",
+    winLossDistribution: "Distribution Gains/Pertes",
+    bettingHistory: "Historique des Paris",
+    date: "Date",
+    match: "Match",
+    betType: "Type de Pari",
+    odds: "Cotes",
+    stake: "Mise",
+    result: "Résultat",
+    profitLoss: "Profit/Perte",
+    cumulative: "Cumulatif",
+    wins: "Gains",
+    losses: "Pertes",
+    tooltips: {
+      totalProfitLoss:
+        "La somme nette de tous les gains moins les pertes sur tous les paris placés. Un nombre positif indique un profit global.",
+      roi: "Retour sur Investissement. Le pourcentage de retour sur les mises totales. Calculé comme (Retours Totaux - Mises Totales) / Mises Totales × 100%.",
+      winRate:
+        "Le pourcentage de paris ayant abouti à un gain. Calculé comme (Nombre de Gains / Nombre Total de Paris) × 100%.",
+      totalBets:
+        "Le nombre total de paris placés pendant cette période de suivi.",
+      cumulativeProfit:
+        "Montre comment votre profit/perte total s'accumule au fil du temps. Chaque point représente le total après chaque pari.",
+      profitLossPerBet:
+        "Montre le profit ou la perte individuel pour chaque pari. Les barres vertes indiquent les paris gagnants, les barres rouges les paris perdants.",
+      winLossDistribution:
+        "La proportion de paris gagnants (vert) par rapport aux paris perdants (rouge) exprimée en pourcentage du total des paris placés.",
+      bettingHistory:
+        "Un enregistrement détaillé de tous les paris placés, incluant la date, le match, le type de pari, les cotes, la mise, le résultat, le profit/perte et le profit cumulatif.",
+    },
+  },
+};
+
+// English translations of bet types
+const betTypeTranslations = {
+  "Résultat R. Madrid": "R. Madrid Win",
+  "Double chance et nombre de buts R. Madrid/match nul et moins de 3,5":
+    "Double chance R. Madrid/draw and under 3.5 goals",
+  "Les 2 équipes marquent Oui": "Both teams to score Yes",
+  "Résultat Naples": "Napoli Win",
+};
+
+const DisclaimerBanner = ({ language }) => {
   return (
     <div className="disclaimer-banner">
       <div className="disclaimer-content">
-        <span>
-          ⚠️ DISCLAIMER: This dashboard is for entertainment purposes only.
-          Betting can be addictive and lead to financial losses. Never bet more
-          than you can afford to lose. If you or someone you know has a gambling
-          problem, please seek help at www.gamblersanonymous.org. This is not
-          financial advice. Bet responsibly. ⚠️
-        </span>
-        <span>
-          ⚠️ DISCLAIMER: This dashboard is for entertainment purposes only.
-          Betting can be addictive and lead to financial losses. Never bet more
-          than you can afford to lose. If you or someone you know has a gambling
-          problem, please seek help at www.gamblersanonymous.org. This is not
-          financial advice. Bet responsibly. ⚠️
-        </span>
+        <span>{translations[language].disclaimer}</span>
+        <span>{translations[language].disclaimer}</span>
       </div>
+    </div>
+  );
+};
+
+const InfoTooltip = ({ text }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  return (
+    <div className="info-tooltip-container">
+      <div
+        className="info-icon"
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="currentColor"
+        >
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+        </svg>
+      </div>
+      {showTooltip && <div className="info-tooltip">{text}</div>}
+    </div>
+  );
+};
+
+const LanguageToggle = ({ language, setLanguage }) => {
+  return (
+    <div className="language-toggle">
+      <button
+        className={`language-btn ${language === "en" ? "active" : ""}`}
+        onClick={() => setLanguage("en")}
+      >
+        EN
+      </button>
+      <button
+        className={`language-btn ${language === "fr" ? "active" : ""}`}
+        onClick={() => setLanguage("fr")}
+      >
+        FR
+      </button>
     </div>
   );
 };
 
 const BettingDashboard = () => {
   const dashboardRef = useRef(null);
+  const [language, setLanguage] = useState("en");
 
-  // Betting data from screenshots
-  const bets = [
+  // Original betting data (French)
+  const originalBets = [
     {
       date: "16 avril 2025",
       shortDate: "16/04",
@@ -119,9 +248,51 @@ const BettingDashboard = () => {
     },
   ];
 
+  // English date format
+  const frenchToEnglishDate = (frenchDate) => {
+    const months = {
+      janvier: "January",
+      février: "February",
+      mars: "March",
+      avril: "April",
+      mai: "May",
+      juin: "June",
+      juillet: "July",
+      août: "August",
+      septembre: "September",
+      octobre: "October",
+      novembre: "November",
+      décembre: "December",
+    };
+
+    const parts = frenchDate.split(" ");
+    if (parts.length === 3) {
+      return `${parts[0]} ${months[parts[1]]} ${parts[2]}`;
+    }
+    return frenchDate;
+  };
+
+  // Get the appropriate betting data based on language
+  const getBets = () => {
+    if (language === "en") {
+      return originalBets.map((bet) => ({
+        ...bet,
+        date: frenchToEnglishDate(bet.date),
+        bet: betTypeTranslations[bet.bet] || bet.bet,
+        result: bet.result === "Win" ? "Win" : "Loss",
+      }));
+    } else {
+      return originalBets;
+    }
+  };
+
+  const bets = getBets();
+
   // Calculate statistics
   const totalBets = bets.length;
-  const winCount = bets.filter((bet) => bet.result === "Win").length;
+  const winCount = bets.filter(
+    (bet) => bet.result === "Win" || bet.result === "Gagné"
+  ).length;
   const lossCount = totalBets - winCount;
   const winRate = (winCount / totalBets) * 100;
   const totalStake = bets.reduce((sum, bet) => sum + bet.stake, 0);
@@ -131,8 +302,8 @@ const BettingDashboard = () => {
 
   // Data for pie chart
   const resultData = [
-    { name: "Wins", value: winCount },
-    { name: "Losses", value: lossCount },
+    { name: translations[language].wins, value: winCount },
+    { name: translations[language].losses, value: lossCount },
   ];
 
   const COLORS = ["#4CAF50", "#F44336"];
@@ -179,26 +350,51 @@ const BettingDashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <DisclaimerBanner />
+      <DisclaimerBanner language={language} />
 
       <div className="p-4 bg-white">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-center">
-            Betting Performance Dashboard
-          </h1>
-          <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={exportToPDF}
-          >
-            Export to PDF
-          </button>
+        <div className="dashboard-header">
+          <LanguageToggle language={language} setLanguage={setLanguage} />
+
+          <div className="flex justify-between items-center mb-6">
+            <div className="dashboard-title">
+              <h1 className="text-2xl font-bold text-center">
+                {translations[language].dashboardTitle}
+                <span className="dashboard-author">
+                  {translations[language].by}{" "}
+                  <a
+                    href="https://sidneydev.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Sidney
+                  </a>
+                </span>
+              </h1>
+            </div>
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={exportToPDF}
+            >
+              {translations[language].exportToPDF}
+            </button>
+          </div>
         </div>
 
         <div ref={dashboardRef} className="flex flex-col">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-2">Total Profit/Loss</h2>
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].totalProfitLoss}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip
+                    text={translations[language].tooltips.totalProfitLoss}
+                  />
+                </div>
+              </div>
               <p
                 className={`text-2xl font-bold ${
                   totalProfit >= 0 ? "text-green-600" : "text-red-600"
@@ -208,7 +404,14 @@ const BettingDashboard = () => {
               </p>
             </div>
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-2">ROI</h2>
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].roi}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip text={translations[language].tooltips.roi} />
+                </div>
+              </div>
               <p
                 className={`text-2xl font-bold ${
                   roi >= 0 ? "text-green-600" : "text-red-600"
@@ -218,22 +421,45 @@ const BettingDashboard = () => {
               </p>
             </div>
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-2">Win Rate</h2>
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].winRate}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip text={translations[language].tooltips.winRate} />
+                </div>
+              </div>
               <p className="text-2xl font-bold text-blue-600">
                 {winRate.toFixed(2)}%
               </p>
             </div>
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-2">Total Bets</h2>
+              <div className="flex items-center mb-2">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].totalBets}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip
+                    text={translations[language].tooltips.totalBets}
+                  />
+                </div>
+              </div>
               <p className="text-2xl font-bold">{totalBets}</p>
             </div>
           </div>
 
           {/* Profit Evolution Chart */}
           <div className="bg-white p-4 rounded shadow mb-6">
-            <h2 className="text-lg font-semibold mb-4">
-              Cumulative Profit Evolution
-            </h2>
+            <div className="flex items-center mb-4">
+              <h2 className="text-lg font-semibold">
+                {translations[language].cumulativeProfitEvolution}
+              </h2>
+              <div className="ml-2">
+                <InfoTooltip
+                  text={translations[language].tooltips.cumulativeProfit}
+                />
+              </div>
+            </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={bets}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -255,9 +481,16 @@ const BettingDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Individual Bet Profit/Loss */}
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">
-                Profit/Loss per Bet
-              </h2>
+              <div className="flex items-center mb-4">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].profitLossPerBet}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip
+                    text={translations[language].tooltips.profitLossPerBet}
+                  />
+                </div>
+              </div>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={bets}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -282,9 +515,16 @@ const BettingDashboard = () => {
 
             {/* Win/Loss Ratio */}
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">
-                Win/Loss Distribution
-              </h2>
+              <div className="flex items-center mb-4">
+                <h2 className="text-lg font-semibold">
+                  {translations[language].winLossDistribution}
+                </h2>
+                <div className="ml-2">
+                  <InfoTooltip
+                    text={translations[language].tooltips.winLossDistribution}
+                  />
+                </div>
+              </div>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie
@@ -314,19 +554,44 @@ const BettingDashboard = () => {
 
           {/* Betting Details Table */}
           <div className="bg-white p-4 rounded shadow">
-            <h2 className="text-lg font-semibold mb-4">Betting History</h2>
+            <div className="flex items-center mb-4">
+              <h2 className="text-lg font-semibold">
+                {translations[language].bettingHistory}
+              </h2>
+              <div className="ml-2">
+                <InfoTooltip
+                  text={translations[language].tooltips.bettingHistory}
+                />
+              </div>
+            </div>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white">
                 <thead>
                   <tr className="bg-gray-200 text-gray-700">
-                    <th className="py-2 px-4 text-left">Date</th>
-                    <th className="py-2 px-4 text-left">Match</th>
-                    <th className="py-2 px-4 text-left">Bet Type</th>
-                    <th className="py-2 px-4 text-left">Odds</th>
-                    <th className="py-2 px-4 text-left">Stake</th>
-                    <th className="py-2 px-4 text-left">Result</th>
-                    <th className="py-2 px-4 text-left">Profit/Loss</th>
-                    <th className="py-2 px-4 text-left">Cumulative</th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].date}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].match}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].betType}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].odds}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].stake}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].result}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].profitLoss}
+                    </th>
+                    <th className="py-2 px-4 text-left">
+                      {translations[language].cumulative}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -342,7 +607,7 @@ const BettingDashboard = () => {
                       <td className="py-2 px-4">€{bet.stake.toFixed(2)}</td>
                       <td
                         className={`py-2 px-4 font-medium ${
-                          bet.result === "Win"
+                          bet.result === "Win" || bet.result === "Gagné"
                             ? "text-green-600"
                             : "text-red-600"
                         }`}

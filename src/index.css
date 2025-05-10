@@ -26,7 +26,7 @@ code {
 
 .disclaimer-content {
   display: inline-block;
-  animation: scrollText 30s linear infinite;
+  animation: scrollText 60s linear infinite;
 }
 
 .disclaimer-content span {
@@ -199,4 +199,117 @@ code {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* Language Toggle Styles */
+.language-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+
+.language-btn {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.language-btn.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #2563eb;
+}
+
+.language-btn:hover:not(.active) {
+  background-color: #e5e7eb;
+}
+
+/* Info Tooltip Styles */
+.info-tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.info-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.info-icon:hover {
+  background-color: #2563eb;
+}
+
+.info-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.info-tooltip {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1f2937;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  width: 250px;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.info-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 5px 5px 5px;
+  border-style: solid;
+  border-color: transparent transparent #1f2937 transparent;
+}
+
+/* Add spacing for the info icons */
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+/* Dashboard Title Styles */
+.dashboard-title {
+  text-align: center;
+}
+
+.dashboard-author {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-top: 5px;
+  color: #6b7280;
+}
+
+.dashboard-author a {
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.dashboard-author a:hover {
+  color: #2563eb;
+  text-decoration: underline;
 }
