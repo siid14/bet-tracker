@@ -43,6 +43,8 @@ const translations = {
     cumulative: "Cumulative",
     wins: "Wins",
     losses: "Losses",
+    win: "Win",
+    loss: "Loss",
     tooltips: {
       totalProfitLoss:
         "The net sum of all wins minus losses across all bets placed. A positive number indicates overall profit.",
@@ -84,6 +86,8 @@ const translations = {
     cumulative: "Cumulatif",
     wins: "Gains",
     losses: "Pertes",
+    win: "Gagné",
+    loss: "Perdu",
     tooltips: {
       totalProfitLoss:
         "La somme nette de tous les gains moins les pertes sur tous les paris placés. Un nombre positif indique un profit global.",
@@ -272,17 +276,22 @@ const BettingDashboard = () => {
     return frenchDate;
   };
 
-  // Get the appropriate betting data based on language
+  // Get translated betting data
   const getBets = () => {
     if (language === "en") {
       return originalBets.map((bet) => ({
         ...bet,
-        date: frenchToEnglishDate(bet.date),
+        date: bet.date.replace("avril", "April").replace("mai", "May"),
         bet: betTypeTranslations[bet.bet] || bet.bet,
-        result: bet.result === "Win" ? "Win" : "Loss",
+        result:
+          bet.result === "Win" ? translations.en.win : translations.en.loss,
       }));
     } else {
-      return originalBets;
+      return originalBets.map((bet) => ({
+        ...bet,
+        result:
+          bet.result === "Win" ? translations.fr.win : translations.fr.loss,
+      }));
     }
   };
 
