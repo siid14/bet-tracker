@@ -14,8 +14,11 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import jsPDF from "jspdf";
+import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import ImageModal from "./components/ImageModal";
+import LazyImage from "./components/LazyImage";
+import { compressImage } from "./utils/ImageCompression";
 
 // Language translations
 const translations = {
@@ -121,80 +124,24 @@ const betTypeTranslations = {
   "Résultat Naples": "Napoli Win",
 };
 
-// Image Modal Component
-const ImageModal = ({ isOpen, imageUrl, onClose, language }) => {
-  if (!isOpen) return null;
-
-  console.log("Opening modal with image:", imageUrl);
-
-  // Handle keyboard events for the modal
-  const handleKeyDown = (e) => {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  };
-
-  // Set focus on the modal when it opens
-  useEffect(() => {
-    if (isOpen) {
-      const closeButton = document.querySelector(".image-modal-close");
-      if (closeButton) closeButton.focus();
-
-      // Add event listener for key presses
-      document.addEventListener("keydown", handleKeyDown);
-
-      // Disable scrolling on the body
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      // Clean up
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
-
-  return (
-    <div
-      className="image-modal-overlay"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
-      <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button
-          className="image-modal-close"
-          onClick={onClose}
-          aria-label={translations[language].closeImage}
-          tabIndex={0}
-          id="modal-title"
-        >
-          {translations[language].closeImage} &times;
-        </button>
-        <img
-          src={imageUrl}
-          alt="Bet Proof"
-          className="image-modal-img"
-          onError={(e) => {
-            console.error("Error loading image:", imageUrl);
-            console.error(
-              "Full URL attempted:",
-              `${window.location.origin}/${imageUrl}`
-            );
-            console.error("Browser error:", e.target.error);
-            e.target.onerror = null;
-            e.target.src =
-              "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlIE5vdCBGb3VuZDwvdGV4dD48L3N2Zz4=";
-          }}
-        />
-      </div>
-    </div>
-  );
-};
-
 // Image Icon Component
 const ImageIcon = ({ onClick }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="image-icon"
+    onClick={onClick}
+    role="button"
+    tabIndex={0}
+    aria-label="View bet image"
+    onKeyDown={(e) => e.key === "Enter" && onClick()}
+  >
+    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+  </svg>
+);
+
+const LazyImageIcon = ({ onClick }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -487,9 +434,11 @@ const BettingDashboard = () => {
 
   const openModal = (imageUrl) => {
     console.log("Attempting to open image:", imageUrl);
-    console.log("Full image path:", `${window.location.origin}/${imageUrl}`);
-    setModalImage(imageUrl);
+    // Show modal with loading state first
     setIsModalOpen(true);
+    setModalImage(imageUrl);
+
+    // Compression happens in the modal component itself
   };
 
   const closeModal = () => {
@@ -763,7 +712,7 @@ const BettingDashboard = () => {
                               className="ml-2"
                               title={translations[language].viewProof}
                             >
-                              <ImageIcon
+                              <LazyImageIcon
                                 onClick={() => openModal(bet.imageUrl)}
                               />
                             </div>
@@ -822,6 +771,7 @@ const BettingDashboard = () => {
         imageUrl={modalImage}
         onClose={closeModal}
         language={language}
+        translations={translations[language]}
       />
     </div>
   );
