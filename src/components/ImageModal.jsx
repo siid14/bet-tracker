@@ -9,9 +9,6 @@ const ImageModal = ({ isOpen, imageUrl, onClose, language, translations }) => {
   const [error, setError] = useState(false);
   const [optimizedUrl, setOptimizedUrl] = useState("");
 
-  // Don't render anything if the modal is not open
-  if (!isOpen) return null;
-
   // Handle keyboard events for the modal
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
@@ -66,6 +63,9 @@ const ImageModal = ({ isOpen, imageUrl, onClose, language, translations }) => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen, imageUrl]);
+
+  // Don't render anything if the modal is not open
+  if (!isOpen) return null;
 
   return (
     <div
