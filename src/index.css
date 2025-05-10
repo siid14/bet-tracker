@@ -15,7 +15,7 @@ code {
 
 /* Disclaimer Banner Styles */
 .disclaimer-banner {
-  background-color: #e53e3e;
+  background-color: #d00000;
   color: white;
   padding: 10px 0;
   overflow: hidden;
@@ -97,15 +97,15 @@ code {
 }
 
 .text-green-600 {
-  color: #059669;
+  color: #047857;
 }
 
 .text-red-600 {
-  color: #dc2626;
+  color: #b91c1c;
 }
 
 .text-blue-600 {
-  color: #2563eb;
+  color: #1e40af;
 }
 
 .min-w-full {
@@ -117,11 +117,11 @@ code {
 }
 
 .bg-gray-200 {
-  background-color: #e5e7eb;
+  background-color: #d1d5db;
 }
 
 .text-gray-700 {
-  color: #374151;
+  color: #1f2937;
 }
 
 .text-left {
@@ -167,11 +167,11 @@ code {
 }
 
 .bg-blue-600 {
-  background-color: #2563eb;
+  background-color: #1e40af;
 }
 
 .hover\:bg-blue-700:hover {
-  background-color: #1d4ed8;
+  background-color: #1e3a8a;
 }
 
 .text-white {

@@ -127,10 +127,49 @@ const ImageModal = ({ isOpen, imageUrl, onClose, language }) => {
 
   console.log("Opening modal with image:", imageUrl);
 
+  // Handle keyboard events for the modal
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      onClose();
+    }
+  };
+
+  // Set focus on the modal when it opens
+  useEffect(() => {
+    if (isOpen) {
+      const closeButton = document.querySelector(".image-modal-close");
+      if (closeButton) closeButton.focus();
+
+      // Add event listener for key presses
+      document.addEventListener("keydown", handleKeyDown);
+
+      // Disable scrolling on the body
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      // Clean up
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   return (
-    <div className="image-modal-overlay" onClick={onClose}>
+    <div
+      className="image-modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="image-modal-close" onClick={onClose}>
+        <button
+          className="image-modal-close"
+          onClick={onClose}
+          aria-label={translations[language].closeImage}
+          tabIndex={0}
+          id="modal-title"
+        >
           {translations[language].closeImage} &times;
         </button>
         <img
@@ -162,6 +201,10 @@ const ImageIcon = ({ onClick }) => (
     fill="currentColor"
     className="image-icon"
     onClick={onClick}
+    role="button"
+    tabIndex={0}
+    aria-label="View bet image"
+    onKeyDown={(e) => e.key === "Enter" && onClick()}
   >
     <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
   </svg>
@@ -180,6 +223,14 @@ const DisclaimerBanner = ({ language }) => {
 
 const InfoTooltip = ({ text }) => {
   const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipId = `tooltip-${Math.random().toString(36).substr(2, 9)}`;
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setShowTooltip(!showTooltip);
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="info-tooltip-container">
@@ -187,6 +238,12 @@ const InfoTooltip = ({ text }) => {
         className="info-icon"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
+        onClick={() => setShowTooltip(!showTooltip)}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        aria-expanded={showTooltip}
+        aria-describedby={tooltipId}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -194,29 +251,42 @@ const InfoTooltip = ({ text }) => {
           width="16"
           height="16"
           fill="currentColor"
+          aria-hidden="true"
         >
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
         </svg>
       </div>
-      {showTooltip && <div className="info-tooltip">{text}</div>}
+      {showTooltip && (
+        <div className="info-tooltip" id={tooltipId} role="tooltip">
+          {text}
+        </div>
+      )}
     </div>
   );
 };
 
 const LanguageToggle = ({ language, setLanguage }) => {
   return (
-    <div className="language-toggle">
+    <div
+      className="language-toggle"
+      role="radiogroup"
+      aria-label="Language selection"
+    >
       <button
         className={`language-btn ${language === "en" ? "active" : ""}`}
         onClick={() => setLanguage("en")}
+        aria-pressed={language === "en"}
+        tabIndex={0}
       >
-        EN
+        EN 🇬🇧
       </button>
       <button
         className={`language-btn ${language === "fr" ? "active" : ""}`}
         onClick={() => setLanguage("fr")}
+        aria-pressed={language === "fr"}
+        tabIndex={0}
       >
-        FR
+        FR 🇫🇷
       </button>
     </div>
   );
@@ -373,7 +443,7 @@ const BettingDashboard = () => {
     { name: translations[language].losses, value: lossCount },
   ];
 
-  const COLORS = ["#4CAF50", "#F44336"];
+  const COLORS = ["#047857", "#b91c1c"];
 
   // Data for bet type distribution
   const betTypes = {};
@@ -454,6 +524,8 @@ const BettingDashboard = () => {
             <button
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={exportToPDF}
+              aria-label="Export dashboard to PDF"
+              tabIndex={0}
             >
               {translations[language].exportToPDF}
             </button>
@@ -550,7 +622,7 @@ const BettingDashboard = () => {
                   type="monotone"
                   dataKey="cumulativeProfit"
                   name="Cumulative Profit"
-                  stroke="#2196F3"
+                  stroke="#1e40af"
                   strokeWidth={2}
                 />
               </LineChart>
@@ -579,12 +651,12 @@ const BettingDashboard = () => {
                   <Bar
                     dataKey="profitLoss"
                     name="Profit/Loss"
-                    fill={(data) => (data > 0 ? "#4CAF50" : "#F44336")}
+                    fill={(data) => (data > 0 ? "#047857" : "#b91c1c")}
                   >
                     {bets.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={entry.profitLoss >= 0 ? "#4CAF50" : "#F44336"}
+                        fill={entry.profitLoss >= 0 ? "#047857" : "#b91c1c"}
                       />
                     ))}
                   </Bar>
@@ -644,31 +716,34 @@ const BettingDashboard = () => {
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full bg-white">
+              <table
+                className="min-w-full bg-white"
+                aria-label={translations[language].bettingHistory}
+              >
                 <thead>
                   <tr className="bg-gray-200 text-gray-700">
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].date}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].match}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].betType}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].odds}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].stake}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].result}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].profitLoss}
                     </th>
-                    <th className="py-2 px-4 text-left">
+                    <th className="py-2 px-4 text-left" scope="col">
                       {translations[language].cumulative}
                     </th>
                   </tr>
@@ -704,6 +779,7 @@ const BettingDashboard = () => {
                             ? "text-green-600"
                             : "text-red-600"
                         }`}
+                        aria-label={`${translations[language].result}: ${bet.result}`}
                       >
                         {bet.result}
                       </td>
@@ -713,6 +789,9 @@ const BettingDashboard = () => {
                             ? "text-green-600"
                             : "text-red-600"
                         }`}
+                        aria-label={`${
+                          translations[language].profitLoss
+                        }: €${bet.profitLoss.toFixed(2)}`}
                       >
                         €{bet.profitLoss.toFixed(2)}
                       </td>
@@ -722,6 +801,9 @@ const BettingDashboard = () => {
                             ? "text-green-600"
                             : "text-red-600"
                         }`}
+                        aria-label={`${
+                          translations[language].cumulative
+                        }: €${bet.cumulativeProfit.toFixed(2)}`}
                       >
                         €{bet.cumulativeProfit.toFixed(2)}
                       </td>
