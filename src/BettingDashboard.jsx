@@ -325,6 +325,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 134,
       imageUrl: "/images/may2025/InterMilanVSFCBarcelona-05062025.jpeg",
     },
+    {
+      date: "9 mai 2025",
+      shortDate: "09/05",
+      match: "FC Barcelone 4 - 3 Real Madrid",
+      bet: "Les 2 équipes marquent Oui",
+      odds: 1.31,
+      stake: 100,
+      gains: 131,
+      result: "Win",
+      profitLoss: 31,
+      cumulativeProfit: 165,
+      imageUrl: "/images/may2025/FCBarcelonaVSRMadrid-05112025.jpeg",
+    },
   ];
 
   // English date format
