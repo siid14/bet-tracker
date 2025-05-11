@@ -15,6 +15,7 @@ A React-based dashboard for visualizing and analyzing betting performance with P
 - **Informative Tooltips**: Helpful explanations for all metrics and charts
 - **Bet Proof Images**: View proof of bets with image modal functionality
 - **Responsible Gambling Disclaimer**: Important disclaimer banner for responsible gambling
+- **CI/CD Integration**: Automatic deployments to Vercel for production and preview environments
 
 ## Technologies Used
 
@@ -22,6 +23,8 @@ A React-based dashboard for visualizing and analyzing betting performance with P
 - **Recharts**: Data visualization library for creating responsive charts
 - **jsPDF & html2canvas**: PDF generation from the dashboard
 - **Tailwind CSS**: Styling and responsive design
+- **Vercel**: Hosting and continuous deployment
+- **GitHub Actions**: CI/CD workflow automation
 
 ## Getting Started
 
@@ -47,7 +50,7 @@ cd betting-stats
 3. Install dependencies:
 
 ```
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### Running the Application
@@ -59,6 +62,32 @@ npm start
 ```
 
 The dashboard will be available at http://localhost:3000
+
+## CI/CD Setup with Vercel
+
+This project uses GitHub Actions to automatically deploy to Vercel.
+
+### Setup Required Secrets
+
+To enable the automatic deployments, you need to add these secrets to your GitHub repository:
+
+1. `VERCEL_TOKEN`: Your Vercel API token
+
+   - Generate from the Vercel dashboard under Account Settings > Tokens
+
+2. `VERCEL_ORG_ID`: Your Vercel organization ID
+
+   - Find in the Vercel dashboard under Settings > General > Your ID
+
+3. `VERCEL_PROJECT_ID`: Your Vercel project ID
+   - Find in the project settings in the Vercel dashboard
+
+### Deployment Flow
+
+- **Production Deployment**: Every push to the `main` branch automatically triggers a production deployment
+- **Preview Deployment**: Every pull request generates a preview deployment with a unique URL
+
+You can check the status of deployments in the "Actions" tab of your GitHub repository.
 
 ## Usage
 
