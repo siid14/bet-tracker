@@ -1,46 +1,43 @@
-name: Deploy to Vercel
+name: React CI/CD
 
+# Define when this workflow will run
 on:
-  push:
-    branches:
-      - main # Deploy production on main branch push
   pull_request:
-    types: [opened, synchronize, reopened] # Deploy preview on PR
+    branches: [main] # Runs on PRs targeting main
+  push:
+    branches: [main] # Runs when code is pushed to main
 
 jobs:
-  deploy:
+  # Main job that handles building and testing
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      # Step 1: Get your code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: "18"
+          cache: "npm"
 
+      # Step 3: Install project dependencies
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # Step 4: Verify the build
       - name: Build
         run: npm run build
 
-      - name: Deploy to Vercel (Production for main branch)
-        if: github.ref == 'refs/heads/main'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod"
-
-      - name: Deploy to Vercel (Preview for PR)
-        if: github.event_name == 'pull_request'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          github-comment: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  # Job for production deployment checks
+  production-deploy:
+    needs: build-and-test # This job only runs after build-and-test succeeds
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Production deployment
+        run: |
+          echo "Vercel will handle the production deployment automatically via GitHub integration"
+          # The actual deployment happens through Vercel's GitHub integration
