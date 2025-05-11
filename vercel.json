@@ -14,5 +14,11 @@
   "github": {
     "enabled": true,
     "silent": true
+  },
+  "git": {
+    "deploymentEnabled": {
+      "preview": true,
+      "production": true
+    }
   }
 }
