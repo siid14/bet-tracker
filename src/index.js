@@ -4,7 +4,7 @@ import "./index.css";
 import BettingDashboard from "./BettingDashboard";
 import { Analytics } from "@vercel/analytics/react";
 
-// test deploy
+// test deploy2
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
