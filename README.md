@@ -24,7 +24,7 @@ A React-based dashboard for visualizing and analyzing betting performance with P
 - **jsPDF & html2canvas**: PDF generation from the dashboard
 - **Tailwind CSS**: Styling and responsive design
 - **Vercel**: Hosting and continuous deployment
-- **GitHub Actions**: CI/CD workflow automation
+- **GitHub Actions**: CI/CD workflow automationt
 
 ## Getting Started
 
