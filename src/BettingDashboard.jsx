@@ -338,6 +338,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 165,
       imageUrl: "/images/may2025/FCBarcelonaVSRMadrid-05112025.jpeg",
     },
+    {
+      date: "15 mai 2025",
+      shortDate: "15/05",
+      match: "Espanyol Barcelone 0 - 2 FC Barcelone",
+      bet: "Résultat FC Barcelone",
+      odds: 1.34,
+      stake: 100,
+      gains: 134,
+      result: "Win",
+      profitLoss: 34,
+      cumulativeProfit: 199,
+      imageUrl: "/images/may2025/EspanyolVSBarcelona-05152025.jpeg",
+    },
   ];
 
   // English date format
