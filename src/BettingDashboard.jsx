@@ -50,6 +50,8 @@ const translations = {
     loss: "Loss",
     viewProof: "View Bet Proof",
     closeImage: "Close",
+    loadingImage: "Loading image...",
+    imageError: "Unable to load image",
     tooltips: {
       totalProfitLoss:
         "The net sum of all wins minus losses across all bets placed. A positive number indicates overall profit.",
@@ -95,6 +97,8 @@ const translations = {
     loss: "Perdu",
     viewProof: "Voir Preuve du Pari",
     closeImage: "Fermer",
+    loadingImage: "Chargement de l'image...",
+    imageError: "Impossible de charger l'image",
     tooltips: {
       totalProfitLoss:
         "La somme nette de tous les gains moins les pertes sur tous les paris placés. Un nombre positif indique un profit global.",
@@ -122,6 +126,7 @@ const betTypeTranslations = {
     "Double chance R. Madrid/draw and under 3.5 goals",
   "Les 2 équipes marquent Oui": "Both teams to score Yes",
   "Résultat Naples": "Napoli Win",
+  "Double chance Inter ou match nul": "Double chance Inter or draw",
 };
 
 // Image Icon Component
@@ -350,6 +355,19 @@ const BettingDashboard = () => {
       profitLoss: 34,
       cumulativeProfit: 199,
       imageUrl: "/images/may2025/EspanyolVSBarcelona-05152025.jpeg",
+    },
+    {
+      date: "22 mai 2025",
+      shortDate: "22/05",
+      match: "Côme 0 - 2 Inter Milan",
+      bet: "Double chance Inter ou match nul",
+      odds: 1.16,
+      stake: 150,
+      gains: 174,
+      result: "Win",
+      profitLoss: 24,
+      cumulativeProfit: 223,
+      imageUrl: "/images/may2025/ComoVSInterMilan-05242025.jpeg",
     },
   ];
 
