@@ -369,6 +369,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 223,
       imageUrl: "/images/may2025/ComoVSInterMilan-05242025.jpeg",
     },
+    {
+      date: "31 mai 2025",
+      shortDate: "31/05",
+      match: "Paris SG 5 - 0 Inter Milan",
+      bet: "Nombre de buts de PSG Plus de 0,5",
+      odds: 1.18,
+      stake: 150,
+      gains: 177,
+      result: "Win",
+      profitLoss: 27,
+      cumulativeProfit: 250,
+      imageUrl: "/images/may2025/PSGVSInterMilan-05212025.jpeg",
+    },
   ];
 
   // English date format
