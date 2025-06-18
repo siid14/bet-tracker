@@ -383,6 +383,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 250,
       imageUrl: "/images/may2025/PSGVSInterMilan-05212025.jpeg",
     },
+    {
+      date: "16 juin 2025",
+      shortDate: "16/06",
+      match: "Monterrey 1 - 1 Inter Milan",
+      bet: "Double chance Inter ou match nul",
+      odds: 1.08,
+      stake: 150,
+      gains: 162,
+      result: "Win",
+      profitLoss: 12,
+      cumulativeProfit: 262,
+      imageUrl: "/images/june2025/MonterreyVSInterMilan-06172025.jpeg",
+    },
   ];
 
   // English date format
