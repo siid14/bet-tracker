@@ -396,6 +396,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 262,
       imageUrl: "/images/june2025/MonterreyVSInterMilan-06172025.jpeg",
     },
+    {
+      date: "17 juin 2025",
+      shortDate: "17/06",
+      match: "Manchester City 2 - 0 Wydad Casablanca",
+      bet: "Nombre de buts Plus de 1,5",
+      odds: 1.1,
+      stake: 150,
+      gains: 165,
+      result: "Win",
+      profitLoss: 15,
+      cumulativeProfit: 277,
+      imageUrl: "/images/june2025/ManCityVSCasablanca-06182025.jpeg",
+    },
   ];
 
   // English date format
