@@ -127,6 +127,7 @@ const betTypeTranslations = {
   "Les 2 équipes marquent Oui": "Both teams to score Yes",
   "Résultat Naples": "Napoli Win",
   "Double chance Inter ou match nul": "Double chance Inter or draw",
+  "Nombre de buts de PSG Plus de 0,5": "PSG Over 0.5 Goals",
 };
 
 // Image Icon Component
