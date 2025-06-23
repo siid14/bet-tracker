@@ -409,6 +409,19 @@ const BettingDashboard = () => {
       cumulativeProfit: 277,
       imageUrl: "/images/june2025/ManCityVSCasablanca-06182025.jpeg",
     },
+    {
+      date: "19 juin 2025",
+      shortDate: "19/06",
+      match: "Manchester City 6 - 0 Al Ain",
+      bet: "Nombre de buts Plus de 1,5",
+      odds: 1.1,
+      stake: 150,
+      gains: 165,
+      result: "Win",
+      profitLoss: 15,
+      cumulativeProfit: 292,
+      imageUrl: "/images/may2025/ManCityVSAlAin-06192025.jpeg",
+    },
   ];
 
   // English date format
