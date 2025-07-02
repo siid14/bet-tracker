@@ -129,6 +129,8 @@ const betTypeTranslations = {
   "Double chance Inter ou match nul": "Double chance Inter or draw",
   "Nombre de buts de PSG Plus de 0,5": "PSG Over 0.5 Goals",
   "Nombre de buts Plus de 1,5": "Total goals Over 1.5",
+  "Qualification Manchester City": "Qualification Manchester City",
+  "Double chance R. Madrid ou match nul": "Double chance R. Madrid or draw",
 };
 
 // Image Icon Component
@@ -422,6 +424,32 @@ const BettingDashboard = () => {
       profitLoss: 15,
       cumulativeProfit: 292,
       imageUrl: "/images/may2025/ManCityVSAlAin-06192025.jpeg",
+    },
+    {
+      date: "29 juin 2025",
+      shortDate: "29/06",
+      match: "Manchester City 3 - 4 Al-Hilal (reg 2-2)",
+      bet: "Qualification Manchester City",
+      odds: 1.11,
+      stake: 200.0,
+      gains: 0.0,
+      result: "Loss",
+      profitLoss: -200.0,
+      cumulativeProfit: 92.0,
+      imageUrl: "/images/may2025/ManCityVSAlHilal-06292025.jpeg",
+    },
+    {
+      date: "1 juillet 2025",
+      shortDate: "01/07",
+      match: "Real Madrid 1 - 0 Juventus Turin",
+      bet: "Double chance R. Madrid ou match nul",
+      odds: 1.2,
+      stake: 108.0,
+      gains: 129.6,
+      result: "Win",
+      profitLoss: 21.6,
+      cumulativeProfit: 113.6,
+      imageUrl: "/images/may2025/RealMadridVSJuventus-07012025.jpeg",
     },
   ];
 
