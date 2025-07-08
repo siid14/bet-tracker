@@ -451,6 +451,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 113.6,
       imageUrl: "/images/may2025/RealMadridVSJuventus-07012025.jpeg",
     },
+    // NEW BET: Real Madrid vs Borussia Dortmund, 4 juillet 2025
+    {
+      date: "4 juillet 2025",
+      shortDate: "04/07",
+      match: "Real Madrid 3 - 2 Borussia Dortmund",
+      bet: "Double chance R. Madrid ou match nul",
+      odds: 1.16,
+      stake: 129.6,
+      gains: 150.34,
+      result: "Win",
+      profitLoss: 20.74,
+      cumulativeProfit: 134.34,
+      imageUrl: "/images/may2025/RealMadridVSBorussiaDortmund-06042025.jpeg",
+    },
   ];
 
   // English date format
@@ -573,109 +587,115 @@ const BettingDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="dashboard-main-container flex flex-col min-h-screen">
       <DisclaimerBanner language={language} />
 
-      <div className="p-4 bg-white">
-        <div className="dashboard-header">
-          <LanguageToggle language={language} setLanguage={setLanguage} />
+      <div className="dashboard-header">
+        <LanguageToggle language={language} setLanguage={setLanguage} />
+        <div className="flex justify-between items-center mb-6">
+          <div className="dashboard-title">
+            <h1>
+              {translations[language].dashboardTitle}
+              <span className="dashboard-author">
+                {translations[language].by}{" "}
+                <a
+                  href="https://sidneydev.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sidney
+                </a>
+              </span>
+            </h1>
+          </div>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={exportToPDF}
+            aria-label="Export dashboard to PDF"
+            tabIndex={0}
+          >
+            {translations[language].exportToPDF}
+          </button>
+        </div>
+      </div>
 
-          <div className="flex justify-between items-center mb-6">
-            <div className="dashboard-title">
-              <h1 className="text-2xl font-bold text-center">
-                {translations[language].dashboardTitle}
-                <span className="dashboard-author">
-                  {translations[language].by}{" "}
-                  <a
-                    href="https://sidneydev.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Sidney
-                  </a>
-                </span>
-              </h1>
+      <div ref={dashboardRef} className="flex flex-col">
+        {/* Summary Cards */}
+        <div className="dashboard-cards">
+          <div className="dashboard-card">
+            <div className="dashboard-card-label flex items-center mb-2">
+              {translations[language].totalProfitLoss}
+              <div className="ml-2">
+                <InfoTooltip
+                  text={translations[language].tooltips.totalProfitLoss}
+                />
+              </div>
             </div>
-            <button
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={exportToPDF}
-              aria-label="Export dashboard to PDF"
-              tabIndex={0}
+            <div
+              className={`dashboard-card-value ${
+                totalProfit >= 0 ? "positive" : "negative"
+              }`}
             >
-              {translations[language].exportToPDF}
-            </button>
+              €{totalProfit.toFixed(2)}
+            </div>
+          </div>
+          <div className="dashboard-card green">
+            <div className="dashboard-card-label flex items-center mb-2">
+              {translations[language].roi}
+              <div className="ml-2">
+                <InfoTooltip text={translations[language].tooltips.roi} />
+              </div>
+            </div>
+            <div
+              className={`dashboard-card-value ${
+                roi >= 0 ? "positive" : "negative"
+              }`}
+            >
+              {roi.toFixed(2)}%
+            </div>
+          </div>
+          <div className="dashboard-card">
+            <div className="dashboard-card-label flex items-center mb-2">
+              {translations[language].winRate}
+              <div className="ml-2">
+                <InfoTooltip text={translations[language].tooltips.winRate} />
+              </div>
+            </div>
+            <div className="dashboard-card-value" style={{ color: "#fff" }}>
+              {winRate.toFixed(2)}%
+            </div>
+          </div>
+          <div className="dashboard-card accent">
+            <div className="dashboard-card-label flex items-center mb-2">
+              {translations[language].totalBets}
+              <div className="ml-2">
+                <InfoTooltip text={translations[language].tooltips.totalBets} />
+              </div>
+            </div>
+            <div className="dashboard-card-value" style={{ color: "#fff" }}>
+              {totalBets}
+            </div>
           </div>
         </div>
 
-        <div ref={dashboardRef} className="flex flex-col">
-          {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white p-4 rounded shadow">
-              <div className="flex items-center mb-2">
-                <h2 className="text-lg font-semibold">
-                  {translations[language].totalProfitLoss}
-                </h2>
-                <div className="ml-2">
-                  <InfoTooltip
-                    text={translations[language].tooltips.totalProfitLoss}
-                  />
-                </div>
-              </div>
-              <p
-                className={`text-2xl font-bold ${
-                  totalProfit >= 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                €{totalProfit.toFixed(2)}
-              </p>
-            </div>
-            <div className="bg-white p-4 rounded shadow">
-              <div className="flex items-center mb-2">
-                <h2 className="text-lg font-semibold">
-                  {translations[language].roi}
-                </h2>
-                <div className="ml-2">
-                  <InfoTooltip text={translations[language].tooltips.roi} />
-                </div>
-              </div>
-              <p
-                className={`text-2xl font-bold ${
-                  roi >= 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {roi.toFixed(2)}%
-              </p>
-            </div>
-            <div className="bg-white p-4 rounded shadow">
-              <div className="flex items-center mb-2">
-                <h2 className="text-lg font-semibold">
-                  {translations[language].winRate}
-                </h2>
-                <div className="ml-2">
-                  <InfoTooltip text={translations[language].tooltips.winRate} />
-                </div>
-              </div>
-              <p className="text-2xl font-bold text-blue-600">
-                {winRate.toFixed(2)}%
-              </p>
-            </div>
-            <div className="bg-white p-4 rounded shadow">
-              <div className="flex items-center mb-2">
-                <h2 className="text-lg font-semibold">
-                  {translations[language].totalBets}
-                </h2>
-                <div className="ml-2">
-                  <InfoTooltip
-                    text={translations[language].tooltips.totalBets}
-                  />
-                </div>
-              </div>
-              <p className="text-2xl font-bold">{totalBets}</p>
-            </div>
-          </div>
+        {/* Accent Section (optional, e.g. for ROI explanation) */}
+        {/* <div className="dashboard-accent-section">
+          <span className="gradient-text" style={{ fontWeight: 600, fontSize: '1.1em' }}>
+            {translations[language].tooltips.roi}
+          </span>
+        </div> */}
 
+        {/* Charts Section */}
+        <div className="dashboard-charts">
           {/* Profit Evolution Chart */}
-          <div className="bg-white p-4 rounded shadow mb-6">
+          <div
+            className="bg-white p-4 rounded shadow"
+            style={{
+              background: "rgba(255,255,255,0.95)",
+              boxShadow: "0 10px 20px rgba(0,0,0,0.10)",
+              borderRadius: "18px",
+            }}
+          >
             <div className="flex items-center mb-4">
               <h2 className="text-lg font-semibold">
                 {translations[language].cumulativeProfitEvolution}
@@ -704,9 +724,17 @@ const BettingDashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Win/Loss Ratio & Bet Profit/Loss */}
+          <div className="flex flex-col gap-6">
             {/* Individual Bet Profit/Loss */}
-            <div className="bg-white p-4 rounded shadow">
+            <div
+              className="bg-white p-4 rounded shadow mb-6"
+              style={{
+                background: "rgba(255,255,255,0.95)",
+                boxShadow: "0 10px 20px rgba(0,0,0,0.10)",
+                borderRadius: "18px",
+              }}
+            >
               <div className="flex items-center mb-4">
                 <h2 className="text-lg font-semibold">
                   {translations[language].profitLossPerBet}
@@ -717,21 +745,17 @@ const BettingDashboard = () => {
                   />
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={250}>
+              <ResponsiveContainer width="100%" height={120}>
                 <BarChart data={bets}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="shortDate" />
                   <YAxis />
                   <Tooltip formatter={(value) => `€${value}`} />
-                  <Bar
-                    dataKey="profitLoss"
-                    name="Profit/Loss"
-                    fill={(data) => (data > 0 ? "#047857" : "#b91c1c")}
-                  >
+                  <Bar dataKey="profitLoss" name="Profit/Loss">
                     {bets.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={entry.profitLoss >= 0 ? "#047857" : "#b91c1c"}
+                        fill={entry.profitLoss >= 0 ? "#51cf66" : "#ff6b6b"}
                       />
                     ))}
                   </Bar>
@@ -740,7 +764,14 @@ const BettingDashboard = () => {
             </div>
 
             {/* Win/Loss Ratio */}
-            <div className="bg-white p-4 rounded shadow">
+            <div
+              className="bg-white p-4 rounded shadow"
+              style={{
+                background: "rgba(255,255,255,0.95)",
+                boxShadow: "0 10px 20px rgba(0,0,0,0.10)",
+                borderRadius: "18px",
+              }}
+            >
               <div className="flex items-center mb-4">
                 <h2 className="text-lg font-semibold">
                   {translations[language].winLossDistribution}
@@ -751,7 +782,7 @@ const BettingDashboard = () => {
                   />
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={250}>
+              <ResponsiveContainer width="100%" height={120}>
                 <PieChart>
                   <Pie
                     data={resultData}
@@ -761,7 +792,7 @@ const BettingDashboard = () => {
                     label={({ name, percent }) =>
                       `${name}: ${(percent * 100).toFixed(0)}%`
                     }
-                    outerRadius={80}
+                    outerRadius={50}
                     fill="#8884d8"
                     dataKey="value"
                   >
@@ -777,116 +808,93 @@ const BettingDashboard = () => {
               </ResponsiveContainer>
             </div>
           </div>
+        </div>
 
-          {/* Betting Details Table */}
-          <div className="bg-white p-4 rounded shadow">
-            <div className="flex items-center mb-4">
-              <h2 className="text-lg font-semibold">
-                {translations[language].bettingHistory}
-              </h2>
-              <div className="ml-2">
-                <InfoTooltip
-                  text={translations[language].tooltips.bettingHistory}
-                />
-              </div>
+        {/* Betting Details Table */}
+        <div className="dashboard-table-container">
+          <div className="flex items-center mb-4">
+            <h2 className="text-lg font-semibold">
+              {translations[language].bettingHistory}
+            </h2>
+            <div className="ml-2">
+              <InfoTooltip
+                text={translations[language].tooltips.bettingHistory}
+              />
             </div>
-            <div className="overflow-x-auto">
-              <table
-                className="min-w-full bg-white"
-                aria-label={translations[language].bettingHistory}
-              >
-                <thead>
-                  <tr className="bg-gray-200 text-gray-700">
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].date}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].match}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].betType}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].odds}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].stake}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].result}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].profitLoss}
-                    </th>
-                    <th className="py-2 px-4 text-left" scope="col">
-                      {translations[language].cumulative}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bets.map((bet, index) => (
-                    <tr
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+          </div>
+          <div className="overflow-x-auto">
+            <table
+              className="dashboard-table"
+              aria-label={translations[language].bettingHistory}
+            >
+              <thead>
+                <tr>
+                  <th scope="col">{translations[language].date}</th>
+                  <th scope="col">{translations[language].match}</th>
+                  <th scope="col">{translations[language].betType}</th>
+                  <th scope="col">{translations[language].odds}</th>
+                  <th scope="col">{translations[language].stake}</th>
+                  <th scope="col">{translations[language].result}</th>
+                  <th scope="col">{translations[language].profitLoss}</th>
+                  <th scope="col">{translations[language].cumulative}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bets.map((bet, index) => (
+                  <tr key={index}>
+                    <td>{bet.date}</td>
+                    <td>
+                      <div className="flex items-center">
+                        {bet.match}
+                        {bet.imageUrl && (
+                          <div
+                            className="ml-2"
+                            title={translations[language].viewProof}
+                          >
+                            <LazyImageIcon
+                              onClick={() => openModal(bet.imageUrl)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td>{bet.bet}</td>
+                    <td>{bet.odds.toFixed(2)}</td>
+                    <td>€{bet.stake.toFixed(2)}</td>
+                    <td
+                      className={`font-medium ${
+                        bet.result === "Win" || bet.result === "Gagné"
+                          ? "positive"
+                          : "negative"
+                      }`}
+                      aria-label={`${translations[language].result}: ${bet.result}`}
                     >
-                      <td className="py-2 px-4">{bet.date}</td>
-                      <td className="py-2 px-4">
-                        <div className="flex items-center">
-                          {bet.match}
-                          {bet.imageUrl && (
-                            <div
-                              className="ml-2"
-                              title={translations[language].viewProof}
-                            >
-                              <LazyImageIcon
-                                onClick={() => openModal(bet.imageUrl)}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="py-2 px-4">{bet.bet}</td>
-                      <td className="py-2 px-4">{bet.odds.toFixed(2)}</td>
-                      <td className="py-2 px-4">€{bet.stake.toFixed(2)}</td>
-                      <td
-                        className={`py-2 px-4 font-medium ${
-                          bet.result === "Win" || bet.result === "Gagné"
-                            ? "text-green-600"
-                            : "text-red-600"
-                        }`}
-                        aria-label={`${translations[language].result}: ${bet.result}`}
-                      >
-                        {bet.result}
-                      </td>
-                      <td
-                        className={`py-2 px-4 font-medium ${
-                          bet.profitLoss >= 0
-                            ? "text-green-600"
-                            : "text-red-600"
-                        }`}
-                        aria-label={`${
-                          translations[language].profitLoss
-                        }: €${bet.profitLoss.toFixed(2)}`}
-                      >
-                        €{bet.profitLoss.toFixed(2)}
-                      </td>
-                      <td
-                        className={`py-2 px-4 font-medium ${
-                          bet.cumulativeProfit >= 0
-                            ? "text-green-600"
-                            : "text-red-600"
-                        }`}
-                        aria-label={`${
-                          translations[language].cumulative
-                        }: €${bet.cumulativeProfit.toFixed(2)}`}
-                      >
-                        €{bet.cumulativeProfit.toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      {bet.result}
+                    </td>
+                    <td
+                      className={`font-medium ${
+                        bet.profitLoss >= 0 ? "positive" : "negative"
+                      }`}
+                      aria-label={`${
+                        translations[language].profitLoss
+                      }: €${bet.profitLoss.toFixed(2)}`}
+                    >
+                      €{bet.profitLoss.toFixed(2)}
+                    </td>
+                    <td
+                      className={`font-medium ${
+                        bet.cumulativeProfit >= 0 ? "positive" : "negative"
+                      }`}
+                      aria-label={`${
+                        translations[language].cumulative
+                      }: €${bet.cumulativeProfit.toFixed(2)}`}
+                    >
+                      €{bet.cumulativeProfit.toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

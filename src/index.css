@@ -6,6 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f3f4f6;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) fixed;
+  min-height: 100vh;
 }
 
 code {
@@ -458,4 +460,217 @@ code {
 /* Lazy loading container */
 .lazy-icon-container {
   display: inline-block;
+}
+
+/**
+ * Modern Dashboard Glassmorphism & Gradient Styles
+ * -----------------------------------------------
+ * Applies to BettingDashboard and related components
+ */
+
+.dashboard-main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px 40px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+}
+
+.dashboard-title h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.2em;
+}
+
+.dashboard-author {
+  font-size: 1.1em;
+  color: #6b7280;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.dashboard-card {
+  border-radius: 18px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 28px 24px 22px 24px;
+  color: #fff;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.4, 2, 0.3, 1), box-shadow 0.25s;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.dashboard-card.green {
+  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+}
+.dashboard-card.red {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+.dashboard-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.13);
+}
+.dashboard-card .dashboard-card-label {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #f3f4f6;
+  letter-spacing: 0.01em;
+}
+.dashboard-card .dashboard-card-value {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.1em;
+}
+.dashboard-card .dashboard-card-value.positive {
+  color: #e6fffa;
+  text-shadow: 0 2px 8px rgba(81, 207, 102, 0.15);
+}
+.dashboard-card .dashboard-card-value.negative {
+  color: #ffe3e3;
+  text-shadow: 0 2px 8px rgba(255, 107, 107, 0.15);
+}
+
+.dashboard-accent-section {
+  background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+  border-radius: 18px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 24px 20px;
+  margin-bottom: 36px;
+}
+
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.dashboard-table-container {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 18px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 24px 10px 10px 10px;
+  margin-bottom: 30px;
+  overflow-x: auto;
+}
+.dashboard-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1em;
+  background: transparent;
+}
+.dashboard-table thead tr {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+.dashboard-table th,
+.dashboard-table td {
+  padding: 12px 18px;
+  text-align: left;
+  font-size: 1em;
+}
+.dashboard-table th {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.dashboard-table tbody tr {
+  transition: background 0.25s;
+}
+.dashboard-table tbody tr:hover {
+  background: #edf2f7;
+}
+.dashboard-table td.positive {
+  color: #40c057;
+  font-weight: 600;
+}
+.dashboard-table td.negative {
+  color: #ee5a6f;
+  font-weight: 600;
+}
+.dashboard-table td {
+  font-size: 0.98em;
+}
+
+@media (max-width: 768px) {
+  .dashboard-main-container {
+    padding: 12px 2vw 18px 2vw;
+    border-radius: 12px;
+  }
+  .dashboard-title h1 {
+    font-size: 1.5em;
+  }
+  .dashboard-cards {
+    gap: 14px;
+  }
+  .dashboard-card {
+    padding: 16px 10px 12px 10px;
+    border-radius: 12px;
+  }
+  .dashboard-accent-section {
+    padding: 12px 8px;
+    border-radius: 12px;
+  }
+  .dashboard-charts {
+    gap: 12px;
+  }
+  .dashboard-table-container {
+    padding: 8px 2px 2px 2px;
+    border-radius: 10px;
+  }
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 7px 7px;
+    font-size: 0.85em;
+  }
+}
+
+/* InfoTooltip and Modal glassmorphism */
+.info-tooltip,
+.image-modal-content {
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #2d3748 !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.13);
+  border-radius: 10px;
+}
+
+/* Smooth transitions for interactive elements */
+.dashboard-card,
+.dashboard-table tbody tr,
+.language-btn,
+.info-icon,
+.image-icon {
+  transition: all 0.25s cubic-bezier(0.4, 2, 0.3, 1);
+}
+
+/* Utility for accent gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
