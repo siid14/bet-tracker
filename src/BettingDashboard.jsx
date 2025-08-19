@@ -454,6 +454,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 113.6,
       imageUrl: "/images/may2025/RealMadridVSJuventus-07012025.jpeg",
     },
+    // NEW BET: Chelsea vs PSG, 9 juillet 2025 (Lost bet)
+    {
+      date: "9 juillet 2025",
+      shortDate: "09/07",
+      match: "Chelsea 3 - 0 Paris SG",
+      bet: "Double chance PSG ou match nul",
+      odds: 1.14,
+      stake: 150.34,
+      gains: 0,
+      result: "Loss",
+      profitLoss: -150.34,
+      cumulativeProfit: -15.68,
+      imageUrl: "/images/may2025/ChelseaVSPSG-07092025.jpeg",
+    },
     // NEW BET: Real Madrid vs Borussia Dortmund, 4 juillet 2025
     {
       date: "4 juillet 2025",
@@ -465,22 +479,8 @@ const BettingDashboard = () => {
       gains: 150.34,
       result: "Win",
       profitLoss: 20.74,
-      cumulativeProfit: 134.34,
+      cumulativeProfit: 5.06,
       imageUrl: "/images/may2025/RealMadridVSBorussiaDortmund-06042025.jpeg",
-    },
-    // NEW BET: Chelsea vs PSG, 8 juin 2025 (Lost bet)
-    {
-      date: "8 juin 2025",
-      shortDate: "08/06",
-      match: "Chelsea 3 - 0 Paris SG",
-      bet: "Double chance PSG ou match nul",
-      odds: 1.14,
-      stake: 150.34,
-      gains: 0,
-      result: "Loss",
-      profitLoss: -150.34,
-      cumulativeProfit: -15.68,
-      imageUrl: "/images/may2025/ChelseaVSPSG-06082025.jpeg",
     },
     // NEW BET: Liverpool vs Bournemouth, 15 août 2025 (Won bet)
     {
@@ -493,7 +493,7 @@ const BettingDashboard = () => {
       gains: 128.0,
       result: "Win",
       profitLoss: 28.0,
-      cumulativeProfit: 12.32,
+      cumulativeProfit: 33.06,
       imageUrl: "/images/august2025/LiverpoolVSBournemouth-08152025.jpeg",
     },
     // NEW BET: Bayern Munich vs VfB Stuttgart, 16 août 2025 (Won bet)
@@ -507,10 +507,56 @@ const BettingDashboard = () => {
       gains: 125.0,
       result: "Win",
       profitLoss: 25.0,
-      cumulativeProfit: 37.32,
+      cumulativeProfit: 58.06,
       imageUrl: "/images/august2025/BayernMunichVSVfBStuttgart-08162025.jpeg",
     },
   ];
+
+  // Function to calculate cumulative profits correctly
+  const calculateCumulativeProfits = (bets) => {
+    let runningTotal = 0;
+    return bets.map((bet) => {
+      runningTotal += bet.profitLoss;
+      return {
+        ...bet,
+        cumulativeProfit: Math.round(runningTotal * 100) / 100, // Round to 2 decimal places
+      };
+    });
+  };
+
+  // Function to sort bets chronologically
+  const sortBetsChronologically = (bets) => {
+    const monthOrder = {
+      avril: 4,
+      mai: 5,
+      juin: 6,
+      juillet: 7,
+      août: 8,
+    };
+
+    return bets.sort((a, b) => {
+      const [dayA, monthA, yearA] = a.date.split(" ");
+      const [dayB, monthB, yearB] = b.date.split(" ");
+
+      const dateA = new Date(
+        parseInt(yearA),
+        monthOrder[monthA] - 1,
+        parseInt(dayA)
+      );
+      const dateB = new Date(
+        parseInt(yearB),
+        monthOrder[monthB] - 1,
+        parseInt(dayB)
+      );
+
+      return dateA - dateB;
+    });
+  };
+
+  // Apply sorting and cumulative profit calculation
+  const sortedBets = sortBetsChronologically(originalBets);
+  const originalBetsWithCorrectCumulative =
+    calculateCumulativeProfits(sortedBets);
 
   // English date format
   const frenchToEnglishDate = (frenchDate) => {
@@ -539,15 +585,20 @@ const BettingDashboard = () => {
   // Get translated betting data
   const getBets = () => {
     if (language === "en") {
-      return originalBets.map((bet) => ({
+      return originalBetsWithCorrectCumulative.map((bet) => ({
         ...bet,
-        date: bet.date.replace("avril", "April").replace("mai", "May"),
+        date: bet.date
+          .replace("avril", "April")
+          .replace("mai", "May")
+          .replace("juin", "June")
+          .replace("juillet", "July")
+          .replace("août", "August"),
         bet: betTypeTranslations[bet.bet] || bet.bet,
         result:
           bet.result === "Win" ? translations.en.win : translations.en.loss,
       }));
     } else {
-      return originalBets.map((bet) => ({
+      return originalBetsWithCorrectCumulative.map((bet) => ({
         ...bet,
         result:
           bet.result === "Win" ? translations.fr.win : translations.fr.loss,
