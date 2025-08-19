@@ -131,6 +131,9 @@ const betTypeTranslations = {
   "Nombre de buts Plus de 1,5": "Total goals Over 1.5",
   "Qualification Manchester City": "Qualification Manchester City",
   "Double chance R. Madrid ou match nul": "Double chance R. Madrid or draw",
+  "Double chance PSG ou match nul": "Double chance PSG or draw",
+  "Résultat Liverpool": "Liverpool Win",
+  "Vainqueur de la finale B. Munich": "Bayern Munich to Win",
 };
 
 // Image Icon Component
@@ -464,6 +467,48 @@ const BettingDashboard = () => {
       profitLoss: 20.74,
       cumulativeProfit: 134.34,
       imageUrl: "/images/may2025/RealMadridVSBorussiaDortmund-06042025.jpeg",
+    },
+    // NEW BET: Chelsea vs PSG, 8 juin 2025 (Lost bet)
+    {
+      date: "8 juin 2025",
+      shortDate: "08/06",
+      match: "Chelsea 3 - 0 Paris SG",
+      bet: "Double chance PSG ou match nul",
+      odds: 1.14,
+      stake: 150.34,
+      gains: 0,
+      result: "Loss",
+      profitLoss: -150.34,
+      cumulativeProfit: -15.68,
+      imageUrl: "/images/may2025/ChelseaVSPSG-06082025.jpeg",
+    },
+    // NEW BET: Liverpool vs Bournemouth, 15 août 2025 (Won bet)
+    {
+      date: "15 août 2025",
+      shortDate: "15/08",
+      match: "Liverpool 4 - 2 Bournemouth",
+      bet: "Résultat Liverpool",
+      odds: 1.28,
+      stake: 100.0,
+      gains: 128.0,
+      result: "Win",
+      profitLoss: 28.0,
+      cumulativeProfit: 12.32,
+      imageUrl: "/images/august2025/LiverpoolVSBournemouth-08152025.jpeg",
+    },
+    // NEW BET: Bayern Munich vs VfB Stuttgart, 16 août 2025 (Won bet)
+    {
+      date: "16 août 2025",
+      shortDate: "16/08",
+      match: "VfB Stuttgart 1 - 2 Bayern Munich",
+      bet: "Vainqueur de la finale B. Munich",
+      odds: 1.25,
+      stake: 100.0,
+      gains: 125.0,
+      result: "Win",
+      profitLoss: 25.0,
+      cumulativeProfit: 37.32,
+      imageUrl: "/images/august2025/BayernMunichVSVfBStuttgart-08162025.jpeg",
     },
   ];
 
