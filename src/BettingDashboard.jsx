@@ -510,6 +510,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 58.06,
       imageUrl: "/images/august2025/BayernMunichVSVfBStuttgart-08162025.jpeg",
     },
+    // NEW BET: Real Madrid vs Osasuna, 18 août 2025 (Won bet)
+    {
+      date: "18 août 2025",
+      shortDate: "18/08",
+      match: "Real Madrid 1 - 0 Osasuna",
+      bet: "Résultat R. Madrid",
+      odds: 1.21,
+      stake: 100.0,
+      gains: 121.0,
+      result: "Win",
+      profitLoss: 21.0,
+      cumulativeProfit: 79.06,
+      imageUrl: "/images/may2025/RMadridVSOsasuna-08182025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
