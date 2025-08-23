@@ -19,6 +19,7 @@ import html2canvas from "html2canvas";
 import ImageModal from "./components/ImageModal";
 import LazyImage from "./components/LazyImage";
 import { compressImage } from "./utils/ImageCompression";
+import useMobileDetection from "./hooks/useMobileDetection";
 
 // Language translations
 const translations = {
@@ -28,6 +29,8 @@ const translations = {
     dashboardTitle: "Betting Performance Dashboard",
     by: "by",
     exportToPDF: "Export to PDF",
+    exportError:
+      "PDF export may not work on all mobile devices. Please try on desktop.",
     totalProfitLoss: "Total Profit/Loss",
     roi: "ROI",
     winRate: "Win Rate",
@@ -75,6 +78,8 @@ const translations = {
     dashboardTitle: "Tableau de Bord des Paris",
     by: "par",
     exportToPDF: "Exporter en PDF",
+    exportError:
+      "L'export PDF peut ne pas fonctionner sur tous les appareils mobiles. Veuillez essayer sur ordinateur.",
     totalProfitLoss: "Profit/Perte Total",
     roi: "Retour sur Investissement",
     winRate: "Taux de Réussite",
@@ -256,6 +261,9 @@ const BettingDashboard = () => {
   const [language, setLanguage] = useState("en");
   const [modalImage, setModalImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Mobile detection hook
+  const { isMobile, isSmallMobile, isTouch } = useMobileDetection();
 
   // Betting data from screenshots
   const originalBets = [
@@ -673,27 +681,54 @@ const BettingDashboard = () => {
 
   const exportToPDF = () => {
     const input = dashboardRef.current;
-    html2canvas(input, { scale: 1 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
 
-      pdf.addImage(
-        imgData,
-        "PNG",
-        imgX,
-        imgY,
-        imgWidth * ratio,
-        imgHeight * ratio
-      );
-      pdf.save("betting-dashboard.pdf");
-    });
+    // Mobile-optimized canvas options
+    const canvasOptions = {
+      scale: isMobile ? 0.8 : 1,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
+      width: isMobile ? input.scrollWidth * 0.8 : input.scrollWidth,
+      height: isMobile ? input.scrollHeight * 0.8 : input.scrollHeight,
+    };
+
+    html2canvas(input, canvasOptions)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png", 0.9);
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+        const imgX = (pdfWidth - imgWidth * ratio) / 2;
+        const imgY = 30;
+
+        pdf.addImage(
+          imgData,
+          "PNG",
+          imgX,
+          imgY,
+          imgWidth * ratio,
+          imgHeight * ratio
+        );
+
+        // Add mobile indicator to filename if on mobile
+        const filename = isMobile
+          ? "betting-dashboard-mobile.pdf"
+          : "betting-dashboard.pdf";
+        pdf.save(filename);
+      })
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+        // Fallback for mobile devices that might have issues with PDF generation
+        if (isMobile) {
+          alert(
+            translations[language].exportError ||
+              "PDF export may not work on all mobile devices. Please try on desktop."
+          );
+        }
+      });
   };
 
   const openModal = (imageUrl) => {
@@ -830,19 +865,30 @@ const BettingDashboard = () => {
                 />
               </div>
             </div>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
               <LineChart data={bets}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="shortDate" />
-                <YAxis />
-                <Tooltip formatter={(value) => `€${value}`} />
-                <Legend />
+                <XAxis
+                  dataKey="shortDate"
+                  fontSize={isMobile ? 10 : 12}
+                  angle={isMobile ? -45 : 0}
+                  textAnchor={isMobile ? "end" : "middle"}
+                  height={isMobile ? 60 : 30}
+                />
+                <YAxis fontSize={isMobile ? 10 : 12} />
+                <Tooltip
+                  formatter={(value) => `€${value}`}
+                  labelStyle={{ fontSize: isMobile ? "12px" : "14px" }}
+                  contentStyle={{ fontSize: isMobile ? "12px" : "14px" }}
+                />
+                <Legend iconSize={isMobile ? 12 : 18} />
                 <Line
                   type="monotone"
                   dataKey="cumulativeProfit"
                   name="Cumulative Profit"
                   stroke="#1e40af"
-                  strokeWidth={2}
+                  strokeWidth={isMobile ? 1.5 : 2}
+                  dot={{ r: isMobile ? 3 : 4 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -869,12 +915,22 @@ const BettingDashboard = () => {
                   />
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={120}>
+              <ResponsiveContainer width="100%" height={isMobile ? 100 : 120}>
                 <BarChart data={bets}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="shortDate" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `€${value}`} />
+                  <XAxis
+                    dataKey="shortDate"
+                    fontSize={isMobile ? 8 : 10}
+                    angle={isMobile ? -45 : 0}
+                    textAnchor={isMobile ? "end" : "middle"}
+                    height={isMobile ? 40 : 30}
+                  />
+                  <YAxis fontSize={isMobile ? 8 : 10} />
+                  <Tooltip
+                    formatter={(value) => `€${value}`}
+                    labelStyle={{ fontSize: isMobile ? "10px" : "12px" }}
+                    contentStyle={{ fontSize: isMobile ? "10px" : "12px" }}
+                  />
                   <Bar dataKey="profitLoss" name="Profit/Loss">
                     {bets.map((entry, index) => (
                       <Cell
@@ -906,17 +962,20 @@ const BettingDashboard = () => {
                   />
                 </div>
               </div>
-              <ResponsiveContainer width="100%" height={120}>
+              <ResponsiveContainer width="100%" height={isMobile ? 100 : 120}>
                 <PieChart>
                   <Pie
                     data={resultData}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    label={
+                      isMobile
+                        ? false
+                        : ({ name, percent }) =>
+                            `${name}: ${(percent * 100).toFixed(0)}%`
                     }
-                    outerRadius={50}
+                    outerRadius={isMobile ? 35 : 50}
                     fill="#8884d8"
                     dataKey="value"
                   >
@@ -927,7 +986,14 @@ const BettingDashboard = () => {
                       />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => value} />
+                  <Tooltip
+                    formatter={(value) => value}
+                    labelStyle={{ fontSize: isMobile ? "10px" : "12px" }}
+                    contentStyle={{ fontSize: isMobile ? "10px" : "12px" }}
+                  />
+                  {isMobile && (
+                    <Legend iconSize={10} wrapperStyle={{ fontSize: "10px" }} />
+                  )}
                 </PieChart>
               </ResponsiveContainer>
             </div>
