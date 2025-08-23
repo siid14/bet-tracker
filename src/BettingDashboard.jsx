@@ -524,6 +524,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 79.06,
       imageUrl: "/images/may2025/RMadridVSOsasuna-08182025.jpeg",
     },
+    // NEW BET: Levante vs FC Barcelona, 23 août 2025 (Won bet)
+    {
+      date: "23 août 2025",
+      shortDate: "23/08",
+      match: "Levante 2 - 3 FC Barcelone",
+      bet: "Résultat FC Barcelone",
+      odds: 1.22,
+      stake: 100.0,
+      gains: 122.0,
+      result: "Win",
+      profitLoss: 22.0,
+      cumulativeProfit: 101.06,
+      imageUrl: "/images/may2025/LevanteVSFCBarcelona-08232025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
