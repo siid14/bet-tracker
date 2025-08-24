@@ -138,6 +138,7 @@ const betTypeTranslations = {
   "Double chance R. Madrid ou match nul": "Double chance R. Madrid or draw",
   "Double chance PSG ou match nul": "Double chance PSG or draw",
   "Résultat Liverpool": "Liverpool Win",
+  "Résultat FC Barcelone": "FC Barcelona to Win",
   "Vainqueur de la finale B. Munich": "Bayern Munich to Win",
 };
 
@@ -545,6 +546,20 @@ const BettingDashboard = () => {
       profitLoss: 22.0,
       cumulativeProfit: 101.06,
       imageUrl: "/images/may2025/LevanteVSFCBarcelona-08232025.jpeg",
+    },
+    // NEW BET: Real Oviedo vs Real Madrid, 24 août 2025 (Won bet)
+    {
+      date: "24 août 2025",
+      shortDate: "24/08",
+      match: "Real Oviedo 0 - 3 Real Madrid",
+      bet: "Résultat R. Madrid",
+      odds: 1.28,
+      stake: 100.0,
+      gains: 128.0,
+      result: "Win",
+      profitLoss: 28.0,
+      cumulativeProfit: 129.06,
+      imageUrl: "/images/may2025/R.OviedoVSR.Madrid-08242025.jpeg",
     },
   ];
 
