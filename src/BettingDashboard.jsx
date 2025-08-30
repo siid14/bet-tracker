@@ -561,6 +561,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 129.06,
       imageUrl: "/images/may2025/R.OviedoVSR.Madrid-08242025.jpeg",
     },
+    // NEW BET: Real Madrid vs Mallorca, 30 août 2025 (Won bet)
+    {
+      date: "30 août 2025",
+      shortDate: "30/08",
+      match: "Real Madrid 2 - 1 Majorque",
+      bet: "Résultat R. Madrid",
+      odds: 1.17,
+      stake: 100.0,
+      gains: 117.0,
+      result: "Win",
+      profitLoss: 17.0,
+      cumulativeProfit: 146.06,
+      imageUrl: "/images/august2025/RMadridVSMallorca-08302025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
