@@ -140,6 +140,8 @@ const betTypeTranslations = {
   "Résultat Liverpool": "Liverpool Win",
   "Résultat FC Barcelone": "FC Barcelona to Win",
   "Vainqueur de la finale B. Munich": "Bayern Munich to Win",
+  "Double chance FC Barcelone ou match nul":
+    "Double chance FC Barcelona or draw",
 };
 
 // Image Icon Component
@@ -435,7 +437,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 15,
       cumulativeProfit: 292,
-      imageUrl: "/images/may2025/ManCityVSAlAin-06192025.jpeg",
+      imageUrl: "/images/june2025/ManCityVSAlAin-06192025.jpeg",
     },
     {
       date: "29 juin 2025",
@@ -448,7 +450,7 @@ const BettingDashboard = () => {
       result: "Loss",
       profitLoss: -200.0,
       cumulativeProfit: 92.0,
-      imageUrl: "/images/may2025/ManCityVSAlHilal-06292025.jpeg",
+      imageUrl: "/images/june2025/ManCityVSAlHilal-06292025.jpeg",
     },
     {
       date: "1 juillet 2025",
@@ -517,7 +519,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 25.0,
       cumulativeProfit: 58.06,
-      imageUrl: "/images/august2025/BayernMunichVSVfBStuttgart-08162025.jpeg",
+      imageUrl: "/images/august2025/StugarttVSBMunich-08162025.jpeg",
     },
     // NEW BET: Real Madrid vs Osasuna, 18 août 2025 (Won bet)
     {
@@ -531,7 +533,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 21.0,
       cumulativeProfit: 79.06,
-      imageUrl: "/images/may2025/RMadridVSOsasuna-08182025.jpeg",
+      imageUrl: "/images/august2025/RMadridVSOsasuna-08182025.jpeg",
     },
     // NEW BET: Levante vs FC Barcelona, 23 août 2025 (Won bet)
     {
@@ -545,7 +547,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 22.0,
       cumulativeProfit: 101.06,
-      imageUrl: "/images/may2025/LevanteVSFCBarcelona-08232025.jpeg",
+      imageUrl: "/images/august2025/LevanteVSFCBarcelona-08232025.jpeg",
     },
     // NEW BET: Real Oviedo vs Real Madrid, 24 août 2025 (Won bet)
     {
@@ -559,7 +561,7 @@ const BettingDashboard = () => {
       result: "Win",
       profitLoss: 28.0,
       cumulativeProfit: 129.06,
-      imageUrl: "/images/may2025/R.OviedoVSR.Madrid-08242025.jpeg",
+      imageUrl: "/images/august2025/R.OviedoVSR.Madrid-08242025.jpeg",
     },
     // NEW BET: Real Madrid vs Mallorca, 30 août 2025 (Won bet)
     {
@@ -574,6 +576,20 @@ const BettingDashboard = () => {
       profitLoss: 17.0,
       cumulativeProfit: 146.06,
       imageUrl: "/images/august2025/RMadridVSMallorca-08302025.jpeg",
+    },
+    // NEW BET: Rayo Vallecano vs FC Barcelona, 31 août 2025 (Won bet)
+    {
+      date: "31 août 2025",
+      shortDate: "31/08",
+      match: "Rayo Vallecano 1 - 1 FC Barcelone",
+      bet: "Double chance FC Barcelone ou match nul",
+      odds: 1.08,
+      stake: 100.0,
+      gains: 108.0,
+      result: "Win",
+      profitLoss: 8.0,
+      cumulativeProfit: 154.06,
+      imageUrl: "/images/august2025/RayoVallecanoVSFCBarcelona-08312025.jpeg",
     },
   ];
 
