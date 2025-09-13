@@ -591,6 +591,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 154.06,
       imageUrl: "/images/august2025/RayoVallecanoVSFCBarcelona-08312025.jpeg",
     },
+    // NEW BET: Heidenheim vs Borussia Dortmund, 12 septembre 2025 (Won bet)
+    {
+      date: "12 septembre 2025",
+      shortDate: "12/09",
+      match: "Heidenheim 0 - 2 Borussia Dortmund",
+      bet: "Nombre de buts Plus de 1,5",
+      odds: 1.14,
+      stake: 100.0,
+      gains: 114.0,
+      result: "Win",
+      profitLoss: 14.0,
+      cumulativeProfit: 168.06,
+      imageUrl: "/images/sept2025/HeidenhemVSBVB-09132025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
@@ -613,6 +627,7 @@ const BettingDashboard = () => {
       juin: 6,
       juillet: 7,
       août: 8,
+      septembre: 9,
     };
 
     return bets.sort((a, b) => {
@@ -673,7 +688,8 @@ const BettingDashboard = () => {
           .replace("mai", "May")
           .replace("juin", "June")
           .replace("juillet", "July")
-          .replace("août", "August"),
+          .replace("août", "August")
+          .replace("septembre", "September"),
         bet: betTypeTranslations[bet.bet] || bet.bet,
         result:
           bet.result === "Win" ? translations.en.win : translations.en.loss,
