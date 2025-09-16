@@ -605,6 +605,48 @@ const BettingDashboard = () => {
       cumulativeProfit: 168.06,
       imageUrl: "/images/sept2025/HeidenhemVSBVB-09132025.jpeg",
     },
+    // NEW BET: Burnley vs Liverpool, 14 septembre 2025 (Lost bet)
+    {
+      date: "14 septembre 2025",
+      shortDate: "14/09",
+      match: "Burnley 0 - 1 Liverpool",
+      bet: "Nombre de buts Plus de 1,5",
+      odds: 1.14,
+      stake: 100.0,
+      gains: 0.0,
+      result: "Loss",
+      profitLoss: -100.0,
+      cumulativeProfit: 68.06,
+      imageUrl: "/images/sept2025/BurnleyVSLiverpool-09142025.jpeg",
+    },
+    // NEW BET: Manchester City vs Manchester United, 14 septembre 2025 (Lost bet)
+    {
+      date: "14 septembre 2025",
+      shortDate: "14/09",
+      match: "Manchester City 3 - 0 Manchester United",
+      bet: "Les 2 équipes marquent Oui",
+      odds: 1.52,
+      stake: 75.8,
+      gains: 0.0,
+      result: "Loss",
+      profitLoss: -75.8,
+      cumulativeProfit: -7.74,
+      imageUrl: "/images/sept2025/ManCityVSManUtd-09142025.jpeg",
+    },
+    // NEW BET: Real Madrid vs Marseille, 15 septembre 2025 (Won bet)
+    {
+      date: "15 septembre 2025",
+      shortDate: "15/09",
+      match: "Real Madrid 2 - 1 Marseille",
+      bet: "Résultat R. Madrid",
+      odds: 1.34,
+      stake: 100.0,
+      gains: 134.0,
+      result: "Win",
+      profitLoss: 34.0,
+      cumulativeProfit: 26.26,
+      imageUrl: "/images/sept2025/RMadridVSOM-09162025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
