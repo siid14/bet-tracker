@@ -647,6 +647,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 26.26,
       imageUrl: "/images/sept2025/RMadridVSOM-09162025.jpeg",
     },
+    // NEW BET: Newcastle vs FC Barcelona, 17 septembre 2025 (Won bet)
+    {
+      date: "17 septembre 2025",
+      shortDate: "17/09",
+      match: "Newcastle 1 - 2 FC Barcelone",
+      bet: "Double chance FC Barcelone ou match nul",
+      odds: 1.48,
+      stake: 100.0,
+      gains: 148.0,
+      result: "Win",
+      profitLoss: 48.0,
+      cumulativeProfit: 74.26,
+      imageUrl: "/images/sept2025/NewcastleVSBarcelona-09182025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
