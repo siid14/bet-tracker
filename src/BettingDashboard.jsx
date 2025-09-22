@@ -661,6 +661,34 @@ const BettingDashboard = () => {
       cumulativeProfit: 74.26,
       imageUrl: "/images/sept2025/NewcastleVSBarcelona-09182025.jpeg",
     },
+    // NEW BET: FC Barcelona vs Getafe, 21 septembre 2025 (Won bet)
+    {
+      date: "21 septembre 2025",
+      shortDate: "21/09",
+      match: "FC Barcelone 3 - 0 Getafe",
+      bet: "Résultat FC Barcelone",
+      odds: 1.2,
+      stake: 100.0,
+      gains: 120.0,
+      result: "Win",
+      profitLoss: 20.0,
+      cumulativeProfit: 94.26,
+      imageUrl: "/images/sept2025/FCBarcelonaVSGetafe-09212025.jpeg",
+    },
+    // NEW BET: Naples vs Pisa, 22 septembre 2025 (Won bet)
+    {
+      date: "22 septembre 2025",
+      shortDate: "22/09",
+      match: "Naples 3 - 2 Pisa",
+      bet: "Résultat Naples",
+      odds: 1.22,
+      stake: 100.0,
+      gains: 122.0,
+      result: "Win",
+      profitLoss: 22.0,
+      cumulativeProfit: 116.26,
+      imageUrl: "/images/sept2025/NaplesVSPisa-09212025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
