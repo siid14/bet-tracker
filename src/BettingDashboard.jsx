@@ -689,6 +689,20 @@ const BettingDashboard = () => {
       cumulativeProfit: 116.26,
       imageUrl: "/images/sept2025/NaplesVSPisa-09212025.jpeg",
     },
+    // NEW BET: Real Oviedo vs FC Barcelona, 23 septembre 2025 (Won bet)
+    {
+      date: "23 septembre 2025",
+      shortDate: "23/09",
+      match: "Real Oviedo 1 - 3 FC Barcelone",
+      bet: "Résultat FC Barcelone",
+      odds: 1.2,
+      stake: 100.0,
+      gains: 120.0,
+      result: "Win",
+      profitLoss: 20.0,
+      cumulativeProfit: 136.26,
+      imageUrl: "/images/sept2025/RealOviedoVSBarcelona-09252025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
