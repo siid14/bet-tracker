@@ -142,6 +142,7 @@ const betTypeTranslations = {
   "Vainqueur de la finale B. Munich": "Bayern Munich to Win",
   "Double chance FC Barcelone ou match nul":
     "Double chance FC Barcelona or draw",
+  "Buteur Kylian Mbappé": "Kylian Mbappé to Score",
 };
 
 // Image Icon Component
@@ -702,6 +703,34 @@ const BettingDashboard = () => {
       profitLoss: 20.0,
       cumulativeProfit: 136.26,
       imageUrl: "/images/sept2025/RealOviedoVSBarcelona-09252025.jpeg",
+    },
+    // NEW BET: Atletico Madrid vs Real Madrid, 28 septembre 2025 (Lost bet)
+    {
+      date: "28 septembre 2025",
+      shortDate: "28/09",
+      match: "Atletico Madrid 5 - 2 Real Madrid",
+      bet: "Double chance R. Madrid ou match nul",
+      odds: 1.36,
+      stake: 149.0,
+      gains: 0.0,
+      result: "Loss",
+      profitLoss: -149.0,
+      cumulativeProfit: -12.74,
+      imageUrl: "/images/sept2025/AtleticoMadridVSRealMadrid-09282025.jpeg",
+    },
+    // NEW BET: Kairat vs Real Madrid, 30 septembre 2025 (Won bet)
+    {
+      date: "30 septembre 2025",
+      shortDate: "30/09",
+      match: "Kairat 0 - 5 Real Madrid",
+      bet: "Buteur Kylian Mbappé",
+      odds: 1.3,
+      stake: 100.0,
+      gains: 130.0,
+      result: "Win",
+      profitLoss: 30.0,
+      cumulativeProfit: 17.26,
+      imageUrl: "/images/sept2025/KairatVSRealMadrid-09302025.jpeg",
     },
   ];
 
