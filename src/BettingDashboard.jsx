@@ -732,6 +732,34 @@ const BettingDashboard = () => {
       cumulativeProfit: 17.26,
       imageUrl: "/images/sept2025/KairatVSRealMadrid-09302025.jpeg",
     },
+    // NEW BET: FC Barcelona vs Paris SG, 1 octobre 2025 (Lost bet)
+    {
+      date: "1 octobre 2025",
+      shortDate: "01/10",
+      match: "FC Barcelone 1 - 2 Paris SG",
+      bet: "Double chance FC Barcelone ou match nul",
+      odds: 1.21,
+      stake: 130.0,
+      gains: 0.0,
+      result: "Loss",
+      profitLoss: -130.0,
+      cumulativeProfit: -112.74,
+      imageUrl: "/images/oct2025/FCBarcelonaVSPSG-10012025.jpeg",
+    },
+    // NEW BET: Real Madrid vs FC Barcelona, 26 octobre 2025 (Won bet)
+    {
+      date: "26 octobre 2025",
+      shortDate: "26/10",
+      match: "Real Madrid 4 - 0 FC Barcelone",
+      bet: "Double chance R. Madrid ou match nul",
+      odds: 1.25,
+      stake: 80.0,
+      gains: 100.0,
+      result: "Win",
+      profitLoss: 20.0,
+      cumulativeProfit: -92.74,
+      imageUrl: "/images/oct2025/RealMadridVSFCBarcelona-10262025.jpeg",
+    },
   ];
 
   // Function to calculate cumulative profits correctly
@@ -755,6 +783,7 @@ const BettingDashboard = () => {
       juillet: 7,
       août: 8,
       septembre: 9,
+      octobre: 10,
     };
 
     return bets.sort((a, b) => {
@@ -816,7 +845,8 @@ const BettingDashboard = () => {
           .replace("juin", "June")
           .replace("juillet", "July")
           .replace("août", "August")
-          .replace("septembre", "September"),
+          .replace("septembre", "September")
+          .replace("octobre", "October"),
         bet: betTypeTranslations[bet.bet] || bet.bet,
         result:
           bet.result === "Win" ? translations.en.win : translations.en.loss,
